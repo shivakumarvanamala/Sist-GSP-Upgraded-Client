@@ -1,0 +1,62 @@
+/* LoadingScreen.css */
+
+.loading-container {
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    justify-content: space-around;
+    animation: moveCircles 4s linear infinite; /* Total animation duration for moving up and down */
+  }
+  
+  .loading-circle {
+    width: 0.5rem;
+    height: 2rem;
+    background-color: #7f1d1d;
+    border-radius: 0.5rem;
+    position: relative; /* Add position relative for absolute positioning */
+    animation: bounce 2s infinite ease-in-out;
+    margin: 0 0.2rem;
+  }
+  
+  @keyframes bounce {
+    0% {
+      transform: translateY(0);
+    }
+    15% {
+      transform: translateY(-1rem); /* Move up with a 0.3s delay */
+    }
+    30% {
+      transform: translateY(0); /* Move back to the original position */
+    }
+    45% {
+      transform: translateY(1rem); /* Move down with a 0.3s delay */
+    }
+    60% {
+      transform: translateY(0); /* Back to the original position */
+    }
+  }
+  
+  .loading-container.reverse {
+    animation-direction: reverse; /* Reverse the animation direction */
+  }
+  
+  .loading-circle:nth-child(2) {
+    animation-delay: 0.3s; /* Reduce the delay for the second circle to 0.3s */
+  }
+  
+  .loading-circle:nth-child(3) {
+    animation-delay: 0.6s; /* Reduce the delay for the third circle to 0.6s */
+  }
+  
+  @keyframes moveCircles {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    16.66% {
+      transform: translateY(-1rem); /* Move all circles up one after the other with a 0.5s gap */
+    }
+    83.33% {
+      transform: translateY(1rem); /* Move all circles down one after the other with a 0.5s gap */
+    }
+  }
+  

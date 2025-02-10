@@ -1,0 +1,56 @@
+
+
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.login_bg {
+  background: url("./assets/login_bg.jpg");
+  min-height: 70vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+@media (max-width: 500px) {
+  .login_bg {
+    background: url("./assets/slogin2.jpg");
+    min-height: 70vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+
+
+@keyframes loading {
+  0% {
+    background-position: 0%; /* Start position, move the start position 50% to the left */
+  }
+  100% {
+    background-position: 100%; /* End position, move the end position 50% to the right */
+  }
+}
+
+.loading-content {
+  background: linear-gradient(to right, rgba(128, 128, 128, 0.3) 0%, rgba(128, 128, 128, 0.3) 50%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 100%);
+  background-size: 200% 100%; /* Double the width to allow for smooth back-and-forth animation */
+  animation: loading 0.6s infinite alternate-reverse linear ; /* Adjust the duration and other parameters as needed */
+}
