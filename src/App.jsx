@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import axios from "axios";
 
 // Import components
 import Dashboard from "./Dashboard";
@@ -26,6 +27,9 @@ import Admin from "./Admin";
 import AdminLogin from "./AdminLogin";
 import AdminAddTeam from "./AdminFunctions/AdminAddTeam";
 import AdminDeleteTeam from "./AdminFunctions/AdminDeleteTeam";
+import AdminAddFaculty from "./AdminFunctions/AdminAddFaculty";
+import AdminUpdateFacultyVacancies from "./AdminFunctions/AdminUpdateFacultyVacancies";
+import AdminGetFacultyDetails from "./AdminFunctions/AdminGetFacultyDetails";
 
 function App() {
   return (
@@ -91,10 +95,19 @@ function App() {
             element={<Success />}
           />
 
-          <Route path="/admin_login" element={<AdminLogin />} />
+          <Route path="//admin_login" element={<AdminLogin />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/admin/addteam" element={<AdminAddTeam />} />
-          <Route path="/admin/deleteteam" element={<AdminDeleteTeam />} />
+          <Route path="/admin/add_team" element={<AdminAddTeam />} />
+          <Route path="/admin/delete_team" element={<AdminDeleteTeam />} />
+          <Route path="/admin/add_faculty" element={<AdminAddFaculty />} />
+          <Route
+            path="/admin/update_faculty_vacancies"
+            element={<AdminUpdateFacultyVacancies />}
+          />
+          <Route
+            path="/admin/get_faculty_details"
+            element={<AdminGetFacultyDetails />}
+          />
         </Routes>
       </Router>
     </div>

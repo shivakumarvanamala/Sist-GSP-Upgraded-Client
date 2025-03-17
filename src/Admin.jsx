@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "./shared/Footer";
-import LoginNavBar from "./LoginNavBar";
-import jwtDecode from "jwt-decode";
+// import LoginNavBar from "./LoginNavBar";
+// import jwtDecode from "jwt-decode";
 import LoadingScreen from "./shared/Loader";
 import sist_logo_login from "./assets/sist_logo_login.png";
-import { TfiHelpAlt } from "react-icons/tfi";
+// import { TfiHelpAlt } from "react-icons/tfi";
 import log_out from "./assets/svgs/log_out.svg";
 
 const Admin = () => {
   const SERVERPATH = import.meta.env.VITE_SERVERPATH;
 
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
 
   const [isLoading, setIsLoading] = useState(false);
   const [Error1, setError1] = useState();
@@ -33,7 +33,8 @@ const Admin = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const adminMailId = localStorage.getItem("adminMailId");
-
+    console.log(token);
+    console.log(adminMailId);
     if (token) {
       const headers = {
         Authorization: `${token}`,
@@ -44,6 +45,7 @@ const Admin = () => {
           SERVERPATH + "/checkAuthentication/" + adminMailId,
           { headers }
         );
+        console.log(response.data);
         setIsLoading(false);
         if (response.data.message == "Authenticated") {
           //   navigate("/admin");
@@ -59,7 +61,7 @@ const Admin = () => {
       localStorage.removeItem("adminMailId");
       navigate("/");
     }
-  }, [location]);
+  }, []);
 
   const adminLogout = () => {
     // Remove token from local storage
@@ -116,7 +118,7 @@ const Admin = () => {
             <div className="justify-center">
               <div className=" flex flex-col justify-center">
                 <a
-                  href="/admin/deleteteam"
+                  href="/admin/deleteTeam"
                   className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg text-center"
                 >
                   Delete Team
@@ -125,7 +127,7 @@ const Admin = () => {
 
               <div className=" flex flex-col justify-center">
                 <a
-                  href="/admin/addteam"
+                  href="/admin/addTeam"
                   className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg text-center"
                 >
                   Add Team
@@ -133,36 +135,42 @@ const Admin = () => {
               </div>
 
               <div className=" flex flex-col justify-center">
-                <button
-                  className={
-                    "bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg"
-                  }
-                  type="submit"
+                <a
+                  href="/admin/addFaculty"
+                  className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg text-center"
                 >
                   Add Faculty
-                </button>
+                </a>
               </div>
 
               <div className=" flex flex-col justify-center">
-                <button
-                  className={
-                    "bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg"
-                  }
-                  type="submit"
+                <a
+                  href="/admin/updateFacultyVacancies"
+                  className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg text-center"
                 >
                   Update Faculty Vacancies
-                </button>
+                </a>
+                {/* <button
+                    className={'bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg'}
+                    type="submit"
+                  >
+                    Update Faculty Vacancies
+                  </button> */}
               </div>
 
               <div className=" flex flex-col justify-center">
-                <button
-                  className={
-                    "bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg"
-                  }
-                  type="submit"
+                <a
+                  href="/admin/getFacultyDetails"
+                  className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg text-center"
                 >
                   Get Faculty Details
-                </button>
+                </a>
+                {/* <button
+                    className={'bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg'}
+                    type="submit"
+                  >
+                    Get Faculty Details
+                  </button> */}
               </div>
             </div>
           </div>

@@ -164,10 +164,10 @@ export default function SingleRegister() {
 
       <div className="lg:flex md:flex md:flex-row lg:flex-row justify-between border-2 m-0 hidden sm:block">
         <div className="lg:w-1/12 sm:w-1/10 flex justify-center p-5 border-x-2 font-semibold lg:text-lg sm:text-sm">
-          <p>Sr. No.</p>
+          <p>Sl. No</p>
         </div>
         <div className="lg:w-3/12 sm:w-6/10 flex justify-center p-5 border-x-2 font-semibold">
-          <p>Supervisor's Name</p>
+          <p>Supervisor&apos;s Name</p>
         </div>
         <div className="lg:w-5/12 md:flex justify-center  p-5 border-x-2 font-semibold hidden sm:block">
           <p>Specialization</p>

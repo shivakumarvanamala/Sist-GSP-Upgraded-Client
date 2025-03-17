@@ -29,7 +29,6 @@ export default function DisplayGuide(props) {
     incrementSerialNumber();
   }, []);
 
-  
   function getDirectLinkFromShareableLink(shareableLink) {
     try {
       const fileIdMatch = shareableLink.match(/\/uc\?id=(.*?)(&|$)/);
@@ -44,8 +43,6 @@ export default function DisplayGuide(props) {
       return null;
     }
   }
-
-  
 
   return (
     <>
@@ -86,11 +83,7 @@ export default function DisplayGuide(props) {
 
         <div className="lg:w-2/12 flex flex-col items-center justify-center p-5 border-x-2">
           <button
-            className={
-              true
-                ? "bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg"
-                : "hidden"
-            }
+            className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg"
             key={props.empId}
             onClick={() =>
               handleButtonClick(
@@ -111,7 +104,7 @@ export default function DisplayGuide(props) {
         <h1>{props.name}</h1>
         <img src={props.img+""} height={100} width={100}></img>
                 <p>No of Vacancies = {props.vacancies}</p>
-                
+
         <button className="h-10 p-2 bg-red-600 text-black" key={props.empId} onClick={() => handleButtonClick(props.empId, props.name, props.mailId, props.vacancies, props.empId)}>
           SELECT
         </button>
