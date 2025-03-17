@@ -4,6 +4,8 @@ import foot_logo from "../assets/sist_logo_login.png";
 import Email from "../assets/email.png";
 import Linkedin from "../assets/linkedin.png";
 import Insta from "../assets/instagram.png";
+import { AiOutlineMail } from "react-icons/ai";
+import { FaInstagram, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -20,35 +22,57 @@ const Footer = () => {
           <div>
             <p className="text-lg font-semibold pb-3.5">Visit us at:</p>
           </div>
-          <div className="flex py-1">
-            <div className="cursor-pointer" onClick={()=>{
-            window.open('https://mail.google.com/mail/?view=cm&fs=1&to=guideselection.cse@sathyabama.ac.in');
-            }}>
-            <img src={Email} alt="Email" />
-            </div> &nbsp;
-            <p className="cursor-pointer" onClick={()=>{
-            window.open('https://mail.google.com/mail/?view=cm&fs=1&to=guideselection.cse@sathyabama.ac.in');
-            }}> Mail</p>
+          <div className="flex py-1 cursor-pointer">
+            {/* <div
+              className="cursor-pointer"
+              onClick={() => {
+                window.open(
+                  "https://mail.google.com/mail/?view=cm&fs=1&to=guideselection.cse@sathyabama.ac.in"
+                );
+              }}
+            >
+              <img src={Email} alt="Email" />
+            </div>{" "} */}
+            <a
+              href="mailto:guideselection.cse@sathyabama.ac.in"
+              className="cursor-pointer"
+            >
+              <AiOutlineMail />
+            </a>
+            &nbsp;
+            <p
+              // className="cursor-pointer"
+              onClick={() => {
+                window.open(
+                  "https://mail.google.com/mail/?view=cm&fs=1&to=guideselection.cse@sathyabama.ac.in"
+                );
+              }}
+            >
+              {" "}
+              Mail
+            </p>
           </div>
-          <div className="flex py-1">
-            <img
+          <div className="flex py-1 cursor-pointer">
+            {/* <img
               src={Linkedin}
               alt="Linkedin
             "
-            />
+            /> */}
+            <FaLinkedin />
             &nbsp;
             <p> Linkedin</p>
           </div>
-          <div className="flex py-1">
-            <img src={Insta} alt="Instagram" /> &nbsp;
+          <div className="flex py-1 cursor-pointer">
+            {/* <img src={Insta} alt="Instagram" />  */}
+            <FaInstagram />
+            &nbsp;
             <p> Instagram</p>
           </div>
         </div>
       </div>
       <hr className="mx-20" />
       <div className="container mx-auto py-2 px-8 text-center text-sm">
-        &copy; {new Date().getFullYear()} Sathyabama University. All rights
-        reserved.
+        &copy; 2025 Sathyabama University. All rights reserved.
       </div>
     </footer>
   );

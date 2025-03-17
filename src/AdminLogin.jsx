@@ -3,24 +3,24 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "./shared/Footer";
 import LoginNavBar from "./LoginNavBar";
-import jwtDecode from "jwt-decode";
+// import jwtDecode from "jwt-decode";
 import LoadingScreen from "./shared/Loader";
 
 const AdminLogin = () => {
   const SERVERPATH = import.meta.env.VITE_SERVERPATH;
 
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
 
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [verifyOTP, setVerifyOTP] = useState(false);
-  const [receivedOTP, setReceivedOTP] = useState(0);
-  const [userOTP, setUserOTP] = useState(0);
-  const [usertoken, setUsertoken] = useState("");
-  const [openNewPasswordContainer, setOpenNewPasswordContainer] =
-    useState(false);
-  const [newPassword, setNewPassword] = useState("");
-  const [newConfirmPassword, setNewConfirmPassword] = useState("");
+  const [formData, setFormData] = useState({ mailId: "", password: "" });
+  // const [verifyOTP, setVerifyOTP] = useState(false);
+  // const [receivedOTP, setReceivedOTP] = useState(0);
+  // const [userOTP, setUserOTP] = useState(0);
+  // const [usertoken, setUsertoken] = useState("");
+  // const [openNewPasswordContainer, setOpenNewPasswordContainer] =
+  //   useState(false);
+  // const [newPassword, setNewPassword] = useState("");
+  // const [newConfirmPassword, setNewConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [openLogin, setOpenLogin] = useState(true);
   const [Error1, setError1] = useState();
@@ -30,6 +30,37 @@ const AdminLogin = () => {
       setError1("");
     }, 3000); // 3000 milliseconds = 3 seconds
   };
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   const adminMailId = localStorage.getItem("adminMailId");
+
+  //   if (token) {
+  //     const headers = {
+  //       Authorization: `${token}`,
+  //     };
+  //     const func = async () => {
+  //       setIsLoading(true);
+  //       const response = await axios.get(
+  //         SERVERPATH + "/checkAuthentication/" + adminMailId,
+  //         { headers }
+  //       );
+  //       setIsLoading(false);
+  //       if (response.data.message == "Authenticated") {
+  //         navigate("/admin");
+  //       } else {
+  //         localStorage.removeItem("token");
+  //         localStorage.removeItem("adminMailId");
+  //         navigate("/");
+  //       }
+  //     };
+  //     func();
+  //   } else {
+  //     localStorage.removeItem("token");
+  //     localStorage.removeItem("adminMailId");
+  //     // navigate("/login");
+  //   }
+  // }, [location]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -46,39 +77,47 @@ const AdminLogin = () => {
           { headers }
         );
         setIsLoading(false);
+        console.log(response.data.message);
         if (response.data.message == "Authenticated") {
           navigate("/admin");
         } else {
           localStorage.removeItem("token");
           localStorage.removeItem("adminMailId");
-          navigate("/home");
+          navigate("/admin_login");
         }
       };
       func();
     } else {
       localStorage.removeItem("token");
       localStorage.removeItem("adminMailId");
-      // navigate("/login");
+      navigate("/admin_login");
     }
-  }, [location]);
+  }, []);
 
-  const handleStaffLogin = async (e) => {
+  const handleAdminLogin = async (e) => {
     e.preventDefault();
     try {
       setIsLoading(true);
 
-      const response = await axios.post(`${SERVERPATH}/adminLogin/check`, {
-        email: formData.email,
-        password: formData.password,
+      const response = await axios.post(`${SERVERPATH}/admin_login/check`, {
+        mailId: formData.mailId,
+        passcode: formData.password,
       });
       setIsLoading(false);
 
       if (response.data.is_account_available === "true") {
         setIsLoading(false);
+        // console.log("inside is_account_available");
+        // console.log(response.data);
         if (response.data.Is_Password_Correct === "true") {
+          // console.log("inside Is_Password_Correct");
+          // console.log(response.data);
           const token = response.data.token;
+          // console.log(token);
           localStorage.setItem("token", token);
-          localStorage.setItem("adminMailId", formData.email);
+          localStorage.setItem("adminMailId", formData.mailId);
+          // console.log(localStorage.getItem("token"));
+          // console.log(localStorage.getItem("adminMailId"));
           navigate("/admin");
         } else {
           // alert("Password is not correct");
@@ -107,15 +146,15 @@ const AdminLogin = () => {
               <h1 className="p-4 font-semibold text-2xl">ADMIN</h1>
             </div>
             <div className="justify-center">
-              <form onSubmit={handleStaffLogin}>
+              <form onSubmit={handleAdminLogin}>
                 <input
                   className="border-2 border-solid border-black rounded-lg px-2 h-12 my-4 w-full"
-                  type="email"
-                  placeholder="Email"
-                  value={formData.email}
+                  type="mailId"
+                  placeholder="MailId"
+                  value={formData.mailId}
                   required
                   onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
+                    setFormData({ ...formData, mailId: e.target.value })
                   }
                 />
                 <input

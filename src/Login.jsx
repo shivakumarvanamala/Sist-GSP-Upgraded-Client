@@ -33,8 +33,6 @@ const Login = () => {
   const [Error2, setError2] = useState();
   const [Error3, setError3] = useState();
 
-  // FRONTEND
-
   const [loginOpen, setLoginOpen] = useState(true);
 
   // useEffect(() => {
@@ -212,7 +210,7 @@ const Login = () => {
       } else {
         console.warn(openNewPasswordContainer);
         // alert("You have entered wrong OTP");
-        setError2("Incorect OTP!");
+        setError2("Incorrect OTP!");
         alertDelay();
 
         // console.warn("Wrong OTP");
@@ -301,7 +299,8 @@ const Login = () => {
             </div>
 
             <div className={verifyOTP ? "visible" : "hidden"}>
-              <div className={true ? " flex justify-center" : "hidden"}>
+              {/* <div className={true ? " flex justify-center" : "hidden"}> */}
+              <div className=" flex justify-center">
                 <h1 className="p-4 font-semibold text-2xl">Verify OTP</h1>
               </div>
               <form>
@@ -336,7 +335,9 @@ const Login = () => {
             </div>
 
             <div className={openNewPasswordContainer ? "visible" : "hidden"}>
-              <div className={true ? " flex justify-center" : "hidden"}>
+              {/* <div className={true ? " flex justify-center" : "hidden"}>
+               */}
+              <div className=" flex justify-center">
                 <h1 className="p-4 font-semibold text-2xl">Set Password</h1>
               </div>
 

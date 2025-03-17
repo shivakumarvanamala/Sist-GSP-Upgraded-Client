@@ -13,14 +13,14 @@ const StaffLogin = () => {
   const location = useLocation();
 
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const [verifyOTP, setVerifyOTP] = useState(false);
-  const [receivedOTP, setReceivedOTP] = useState(0);
-  const [userOTP, setUserOTP] = useState(0);
-  const [usertoken, setUsertoken] = useState("");
-  const [openNewPasswordContainer, setOpenNewPasswordContainer] =
-    useState(false);
-  const [newPassword, setNewPassword] = useState("");
-  const [newConfirmPassword, setNewConfirmPassword] = useState("");
+  // const [verifyOTP, setVerifyOTP] = useState(false);
+  // const [receivedOTP, setReceivedOTP] = useState(0);
+  // const [userOTP, setUserOTP] = useState(0);
+  // const [usertoken, setUsertoken] = useState("");
+  // const [openNewPasswordContainer, setOpenNewPasswordContainer] =
+  //   useState(false);
+  // const [newPassword, setNewPassword] = useState("");
+  // const [newConfirmPassword, setNewConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [openLogin, setOpenLogin] = useState(true);
   const [Error1, setError1] = useState();
