@@ -118,7 +118,15 @@ const Admin = () => {
             <div className="justify-center">
               <div className=" flex flex-col justify-center">
                 <a
-                  href="/admin/deleteTeam"
+                  href="/admin/add_team"
+                  className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg text-center"
+                >
+                  Add Team
+                </a>
+              </div>
+              <div className=" flex flex-col justify-center">
+                <a
+                  href="/admin/delete_team"
                   className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg text-center"
                 >
                   Delete Team
@@ -127,16 +135,7 @@ const Admin = () => {
 
               <div className=" flex flex-col justify-center">
                 <a
-                  href="/admin/addTeam"
-                  className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg text-center"
-                >
-                  Add Team
-                </a>
-              </div>
-
-              <div className=" flex flex-col justify-center">
-                <a
-                  href="/admin/addFaculty"
+                  href="/admin/add_faculty"
                   className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg text-center"
                 >
                   Add Faculty
@@ -145,7 +144,7 @@ const Admin = () => {
 
               <div className=" flex flex-col justify-center">
                 <a
-                  href="/admin/updateFacultyVacancies"
+                  href="/admin/update_faculty_vacancies"
                   className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg text-center"
                 >
                   Update Faculty Vacancies
@@ -160,7 +159,7 @@ const Admin = () => {
 
               <div className=" flex flex-col justify-center">
                 <a
-                  href="/admin/getFacultyDetails"
+                  href="/admin/get_faculty_details"
                   className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg text-center"
                 >
                   Get Faculty Details

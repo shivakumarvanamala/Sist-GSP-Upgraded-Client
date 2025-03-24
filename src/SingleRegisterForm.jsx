@@ -144,7 +144,7 @@ export default function SingleRegisterForm() {
         ) {
           const data = {
             collection_name: userRegNo, // Replace 'my_collection' with the desired collection name
-            data: {
+            registered_data: {
               team: false,
               name: userName,
               regNo: userRegNo,

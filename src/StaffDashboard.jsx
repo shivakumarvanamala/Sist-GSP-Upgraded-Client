@@ -15,7 +15,7 @@ import { FaUserPlus } from "react-icons/fa";
 const StaffDashboard = () => {
   const SERVERPATH = import.meta.env.VITE_SERVERPATH;
 
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [open, setOpen] = useState(false);
 
@@ -33,12 +33,12 @@ const StaffDashboard = () => {
         Authorization: `${token}`,
       };
       const func = async () => {
-        setisLoading(true);
+        setIsLoading(true);
         const response = await axios.get(
           SERVERPATH + "/checkAuthentication/" + userEmail,
           { headers }
         );
-        setisLoading(false);
+        setIsLoading(false);
         if (response.data.message == "Authenticated") {
           // navigate("/dashboard");
         } else {
@@ -77,11 +77,11 @@ const StaffDashboard = () => {
   const fetchStudentsData = async () => {
     try {
       const userEmail = localStorage.getItem("guideMailId");
-      setisLoading(true);
+      setIsLoading(true);
       const response = await axios.post(
         SERVERPATH + "/staffLogin/getStudentsData/" + userEmail
       );
-      setisLoading(false);
+      setIsLoading(false);
       // console.warn(response.data);
       setStudentsData(response.data.allStudentsData);
       setGuideImg(response.data.guideImg);
