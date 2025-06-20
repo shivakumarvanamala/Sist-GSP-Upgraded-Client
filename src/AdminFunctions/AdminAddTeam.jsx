@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "../shared/Footer";
-import LoginNavBar from "../LoginNavBar";
-import jwtDecode from "jwt-decode";
 import LoadingScreen from "../shared/Loader";
 import sist_logo_login from "../assets/sist_logo_login.png";
-import { TfiHelpAlt } from "react-icons/tfi";
 import log_out from "../assets/svgs/log_out.svg";
 
 function AdminAddTeam() {
@@ -31,11 +27,11 @@ function AdminAddTeam() {
   };
 
   const handleStudent1Change = (event) => {
-    setStudent1(event.target.value);
+    setStudent1(parseInt(event.target.value));
   };
 
   const handleStudent2Change = (event) => {
-    setStudent2(event.target.value);
+    setStudent2(parseInt(event.target.value));
   };
 
   const validateStudentId = (id) => {
@@ -64,7 +60,7 @@ function AdminAddTeam() {
       selectedGuide: facultyEmail,
       regNo: student1,
       p2regNo: isTeamSize2 ? student2 : null,
-      password: "abcd",
+      password: "sist",
     };
 
     try {
@@ -156,8 +152,7 @@ function AdminAddTeam() {
               onClick={toggleDropdown}
               className="text-sm font-semibold rounded text-white focus:outline-none"
             >
-              &#9660; {/* Down arrow */}
-            </button>
+              <svg className="h-8 w-8 text-gray-100" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>            </button>
             {isDropdownOpen && (
               <div className="absolute top-10 right-0 bg-white text-gray-800 p-2 rounded shadow-md z-10">
                 <div className="flex flex-row justify-center items-center hover:bg-gray-200">
@@ -172,79 +167,76 @@ function AdminAddTeam() {
         </div>
       </nav>
 
-      <div className="login_bg px-10 xs:px-10 flex justify-center items-center min-h-screen">
-        <div className="lg:w-1/4 md:w-2/4 s:w-2/4 xs:w-3/4 border p-4 bg-white bg-opacity-50 backdrop-filter rounded-lg shadow-lg">
-          <div className="block">
-            <div className="flex justify-center">
-              <h1 className="p-4 font-semibold text-2xl text-center">
-                Add a Team
-              </h1>
+      <div className="login_bg bg-cover bg-center flex items-center justify-center px-4 py-10">
+        <div className="backdrop-filter bg-white/30 bg-opacity-60 shadow-2xl rounded-3xl p-10 w-full max-w-xl space-y-8 text-black">
+          <h1 className="text-3xl font-bold text-center text-[#9e1c3f]">Add a Team</h1>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <input
+              type="email"
+              value={facultyEmail}
+              onChange={handleInputChange}
+              placeholder="Faculty Email"
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#9e1c3f] focus:outline-none"
+            />
+
+            <div className="flex items-center justify-start gap-3">
+              <label htmlFor="teamSize" className="text-md font-semibold text-gray-700">
+                Team Size (2 members)?
+              </label>
+              <input
+                type="checkbox"
+                id="teamSize"
+                name="teamSize"
+                checked={isTeamSize2}
+                onChange={handleTeamSizeChange}
+                className="h-4 w-4"
+              />
             </div>
-            <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-              <label className="flex flex-col">
-                <input
-                  type="email"
-                  value={facultyEmail}
-                  onChange={handleInputChange}
-                  placeholder="Enter Faculty Email"
-                  required
-                  className="border rounded-md p-2 text-black placeholder-gray-500 focus:ring-2 focus:ring-red-900 focus:outline-none"
-                />
-              </label>
 
-              <div className="flex items-center space-x-2">
-                <label htmlFor="teamSize" className="text-sm">
-                  Team Size (2):
-                </label>
-                <input
-                  type="checkbox"
-                  id="teamSize"
-                  name="teamSize"
-                  checked={isTeamSize2}
-                  onChange={handleTeamSizeChange}
-                />
-              </div>
+            <input
+              type="text"
+              value={student1}
+              onChange={handleStudent1Change}
+              placeholder="Student 1 Reg. No. (8-digits)"
+              maxLength="8"
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#9e1c3f] focus:outline-none"
+            />
 
-              <label className="flex flex-col">
-                <input
-                  type="text"
-                  value={student1}
-                  onChange={handleStudent1Change}
-                  placeholder="Enter 8-digit Student 1 Registration Number"
-                  maxLength="8"
-                  required
-                  className="border rounded-md p-2 text-black placeholder-gray-500 focus:ring-2 focus:ring-red-900 focus:outline-none"
-                />
-              </label>
+            <input
+              type="text"
+              value={student2}
+              onChange={handleStudent2Change}
+              placeholder="Student 2 Reg. No. (8-digits)"
+              maxLength="8"
+              disabled={!isTeamSize2}
+              required={isTeamSize2}
+              className={`w-full px-4 py-2 border ${isTeamSize2 ? "border-gray-300" : "border-gray-200 opacity-50"
+                } rounded-md focus:ring-2 focus:ring-[#9e1c3f] focus:outline-none`}
+            />
 
-              <label className="flex flex-col">
-                <input
-                  type="text"
-                  value={student2}
-                  onChange={handleStudent2Change}
-                  placeholder="Enter 8-digit Student 2 Registration Number"
-                  maxLength="8"
-                  disabled={!isTeamSize2}
-                  required={isTeamSize2}
-                  className="border rounded-md p-2 text-black placeholder-gray-500 focus:ring-2 focus:ring-red-900 focus:outline-none"
-                />
-              </label>
+            <button
+              type="submit"
+              className="w-full bg-[#9e1c3f] hover:bg-[#7b152f] text-white font-semibold py-2 rounded-md transition duration-300"
+            >
+              Add Team
+            </button>
+          </form>
 
-              <button
-                type="submit"
-                className="bg-red-900 text-white px-6 py-2 rounded-md text-lg hover:bg-red-700 transition duration-300"
-              >
-                Add Team
-              </button>
-            </form>
-
-            {error && <p className="mt-4 text-red-600 text-center">{error}</p>}
-            {message && (
-              <p className="mt-4 text-green-600 text-center">{message}</p>
-            )}
-          </div>
+          {error && (
+            <p className="text-center text-red-600 font-medium text-sm">{error}</p>
+          )}
+          {message && (
+            <p className="text-center text-green-600 font-medium text-sm">
+              {message}
+            </p>
+          )}
         </div>
       </div>
+      <Footer />
+
     </div>
   );
 }

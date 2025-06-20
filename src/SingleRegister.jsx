@@ -1,164 +1,139 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-
-import jwtDecode from "jwt-decode";
-
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import DisplayGuide from "./DisplayGuide";
 import LoginNavBar from "./LoginNavBar";
 import Footer from "./shared/Footer";
-
 import LoadingScreen from "./shared/Loader";
 
 export default function SingleRegister() {
   const SERVERPATH = import.meta.env.VITE_SERVERPATH;
-
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredGuides, setFilteredGuides] = useState([]);
-
+  const [inputValue, setInputValue] = useState("");
   const [guideDict, setGuideDict] = useState([]);
-
   const [isLoading, setIsLoading] = useState(false);
-
-  const location = useLocation();
-
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 20;
   const navigate = useNavigate();
+
+  // const getData = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     const res = await axios.get(`${SERVERPATH}/guide_list`, {
+  //       params: { page, limit, search: searchQuery },
+  //     });
+  //     setGuideDict(res.data.guides);
+  //     setTotalPages(res.data.totalPages);
+  //   } catch (err) {
+  //     console.warn(err);
+  //   }
+  //   setIsLoading(false);
+  // };
 
   const getData = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(SERVERPATH + "/guide_list");
-      setGuideDict(response.data.sort((a, b) => a.SL - b.SL));
+      const res = await axios.get(`${SERVERPATH}/guide_list`, {
+        params: { page, limit, search: searchQuery },
+      });
+
+      // console.log("Fetched data:", res.data); 
+
+      // ✅ FIX: check correct keys from backend response
+      if (res.data && Array.isArray(res.data.guides)) {
+        setGuideDict(res.data.guides);
+        setTotalPages(res.data.totalPages || 1); // fallback just in case
+      } else {
+        setGuideDict([]); // handle unexpected structure
+        setTotalPages(1);
+      }
     } catch (err) {
-      console.warn(err);
+      console.warn("Error fetching guide list:", err);
+      setGuideDict([]); // fail-safe
+      setTotalPages(1);
     }
     setIsLoading(false);
   };
 
-  // useEffect(() => {
-  //   const checkToken = async () => {
-  //     const token = localStorage.getItem("token_for_first_time");
-
-  //     if (token) {
-  //       const decodedToken = jwtDecode(token);
-  //       const expirationTime = decodedToken.exp * 1000;
-
-  //       if (expirationTime < Date.now()) {
-  //         localStorage.removeItem("token");
-  //         localStorage.removeItem("GuideName");
-  //         localStorage.removeItem("GuideMailId");
-  //         localStorage.removeItem("userMailId");
-  //         localStorage.removeItem("newPassword");
-  //         navigate("/login");
-  //       }
-  //     } else {
-  //       navigate("/login");
-  //     }
-  //   };
-
-  //   checkToken();
-  //   getData();
-  // }, [navigate]);
 
   useEffect(() => {
     const token = localStorage.getItem("token_for_first_time");
     const userEmail = localStorage.getItem("userEmail");
-
     if (token) {
-      const headers = {
-        Authorization: `${token}`,
-      };
-      const func = async () => {
-        const response = await axios.get(
-          SERVERPATH + "/checkAuthentication/" + userEmail,
-          { headers }
-        );
-        if (response.data.message == "Authenticated") {
-          // console.warn(("hiii"))
-        } else {
-          localStorage.removeItem("token");
-          localStorage.removeItem("userEmail");
-          navigate("/login");
-        }
-      };
-      func();
-      getData();
+      const headers = { Authorization: token };
+      axios
+        .get(`${SERVERPATH}/checkAuthentication/${userEmail}`, { headers })
+        .then((res) => {
+          if (res.data.message !== "Authenticated") {
+            localStorage.clear();
+            navigate("/login");
+          } else {
+            getData();
+          }
+        });
     } else {
-      localStorage.removeItem("token");
-      localStorage.removeItem("userEmail");
+      localStorage.clear();
       navigate("/login");
     }
   }, []);
 
   useEffect(() => {
-    // Filter guides based on the search query
-    const filteredGuides = guideDict.filter((guide) =>
-      guide["NAME"].toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredGuides(filteredGuides);
-  }, [searchQuery, guideDict]);
+    getData();
+  }, [searchQuery, page]);
 
-  let guideSerialNumber = 1;
+  const guideSerialNumber = (page - 1) * limit + 1;
 
-  function capitalizeEachWord(str) {
-    return str.replace(/\w+/g, (word) => {
-      const firstLetter = word.charAt(0).toUpperCase();
-      const restOfWord = word.slice(1).toLowerCase();
-      return firstLetter + restOfWord;
-    });
-  }
+  const capitalizeEachWord = (str) =>
+    str.replace(/\w+/g, (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
 
-  function capitalizeNameOnly(name) {
-    const words = name.split(" ");
-
-    const capitalizedWords = words.map((word, index) => {
-      const titleMatch = word.match(/^(Mr\.|Mrs\.|Dr\.|Ms\.)(.*)/i);
-
-      if (titleMatch) {
-        // If there is a title, keep it unchanged
-        const title = titleMatch[1];
-        const capitalizedRest = titleMatch[2]
-          ? titleMatch[2][0].toUpperCase() +
-            titleMatch[2].slice(1).toUpperCase()
-          : "";
-
-        return title + capitalizedRest;
-      } else {
-        // If no title, capitalize the entire word
-        return word.toUpperCase();
-      }
-    });
-
-    return capitalizedWords.join(" ");
-  }
+  const capitalizeNameOnly = (name) =>
+    name
+      .split(" ")
+      .map((word) => {
+        const match = word.match(/^(Mr\.|Mrs\.|Dr\.|Ms\.)(.*)/i);
+        if (match) {
+          const [_, title, rest] = match;
+          return title + (rest ? rest[0].toUpperCase() + rest.slice(1).toUpperCase() : "");
+        } else {
+          return word.toUpperCase();
+        }
+      })
+      .join(" ");
 
   return (
     <>
       {isLoading && <LoadingScreen />}
       <LoginNavBar />
-      {/* {console.warn("dict" + guideDict)} */}
 
-      {/* <h1>Single Registration Form</h1> */}
-
-      <div className="bg-[#9e1c3f] flex items-center justify-between mt-5 mb-5">
+      <div className="bg-[#9e1c3f] flex flex-col lg:flex-row items-center justify-between mt-1 mb-5 px-4 py-3 sticky top-0 z-50 shadow-md space-y-2 lg:space-y-0">
+        {/* <div className="flex flex-row items-center justify-center" /> */}
         <div className="flex flex-row items-center justify-center">
-          <h1 className="p-4 text-white leading-loose  font-semibold text-2xl items-center"></h1>
+          <h1 className="text-white font-semibold text-xl lg:text-2xl">Select Your Guide</h1>
         </div>
-
-        <div className="flex flex-row items-center justify-center">
-          <h1 className="p-4 text-white leading-loose  font-semibold lg:text-2xl md:text-2xl items-center text-sm">
-            Select Your Guide
-          </h1>
-        </div>
-        <div className="flex flex-row items-center">
+        <div className="flex flex-row items-center w-full lg:w-[40%] gap-2">
           <input
             type="text"
-            placeholder="Search guide..."
-            className="border-2 border-solid border-black rounded-lg px-2 h-12 my-4 mr-10 lg:w-fit md:w-fit w-40"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search by guide name..."
+            className="border-2 border-black rounded-lg px-4 h-12 w-full text-center"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setPage(1);
+                setSearchQuery(inputValue.trim());
+              }
+            }}
           />
+          <button
+            className="bg-white text-black border-2 border-black rounded-lg px-4 h-12 font-semibold"
+            onClick={() => {
+              setPage(1);
+              setSearchQuery(inputValue.trim());
+            }}
+          >
+            Search
+          </button>
         </div>
       </div>
 
@@ -167,37 +142,63 @@ export default function SingleRegister() {
           <p>Sl. No</p>
         </div>
         <div className="lg:w-3/12 sm:w-6/10 flex justify-center p-5 border-x-2 font-semibold">
-          <p>Supervisor&apos;s Name</p>
+          <p>Guide Name</p>
         </div>
-        <div className="lg:w-5/12 md:flex justify-center  p-5 border-x-2 font-semibold hidden sm:block">
+        <div className="lg:w-5/12 md:flex justify-center p-5 border-x-2 font-semibold hidden sm:block">
           <p>Specialization</p>
         </div>
         <div className="lg:w-2/12 flex sm:w-1/10 justify-center p-5 border-x-2 font-semibold">
-          <p>Guides Vacancy</p>
+          <p>Guide Vacancies</p>
         </div>
         <div className="lg:w-2/12 sm:w-2/10 flex justify-center p-5 border-x-2 font-semibold">
           <p>Select</p>
         </div>
       </div>
 
-      {filteredGuides.map((item) => {
-        return (
-          <DisplayGuide
-            key={item["id"]}
-            serialNumber={guideSerialNumber++}
-            empId={item["EMPID"]}
-            name={capitalizeNameOnly(item["NAME"])}
-            img={item["IMAGE"]}
-            vacancies={item["VACANCIES"]}
-            designation={capitalizeEachWord(item["DESIGNATION"])}
-            dm1={item["DOMAIN1"]}
-            dm2={item["DOMAIN2"]}
-            dm3={item["DOMAIN3"]}
-            mailId={item["UniversityEMAILID"].toLowerCase()}
-            im="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb3m_AEpNzWsxMYF_W3DiheGuLfRH9hTb4SA&usqp=CAU"
-          />
-        );
-      })}
+      {guideDict.map((item, idx) => (
+        <DisplayGuide
+          key={item.id}
+          serialNumber={guideSerialNumber + idx}
+          empId={item.EMPID}
+          name={capitalizeNameOnly(item.NAME)}
+          img={item.IMAGE}
+          vacancies={item.VACANCIES}
+          designation={capitalizeEachWord(item.DESIGNATION)}
+          dm1={item.DOMAIN1}
+          dm2={item.DOMAIN2}
+          dm3={item.DOMAIN3}
+          mailId={item.UniversityEMAILID.toLowerCase()}
+        />
+      ))}
+
+      <div className="flex justify-center items-center gap-6 my-8">
+        <button
+          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          disabled={page === 1}
+          className={`px-5 py-2 rounded-full font-medium transition-all duration-200 border-2 ${page === 1
+            ? "bg-gray-200 text-gray-500 border-gray-300 cursor-not-allowed"
+            : "bg-white hover:bg-[#9e1c3f] hover:text-white border-[#9e1c3f] text-[#9e1c3f]"
+            }`}
+        >
+          ⬅ Prev
+        </button>
+
+        <span className="text-lg font-semibold text-gray-700">
+          Page <span className="text-[#9e1c3f]">{page}</span> of {totalPages}
+        </span>
+
+        <button
+          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={page === totalPages}
+          className={`px-5 py-2 rounded-full font-medium transition-all duration-200 border-2 ${page === totalPages
+            ? "bg-gray-200 text-gray-500 border-gray-300 cursor-not-allowed"
+            : "bg-white hover:bg-[#9e1c3f] hover:text-white border-[#9e1c3f] text-[#9e1c3f]"
+            }`}
+        >
+          Next ➡
+        </button>
+      </div>
+
 
       <Footer />
     </>

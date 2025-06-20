@@ -315,7 +315,7 @@ export const NewProfileDetails = () => {
         >
           <img
             className=" w-12 h-12 rounded-full border-2 z-0"
-            src={getDirectLinkFromShareableLink(guideImg)}
+            src={getDirectLinkFromShareableLink(guideImg) || "/faculty_fallback_image.jpeg"}
             alt="Faculty"
           />
           <div className="hidden md:flex md:items-center md:justify-center relative">
@@ -494,7 +494,7 @@ export const NewProfileDetails = () => {
         </div>
       </div>
 
-      <div className="hidden md:fixed md:w-fit md:h-full md:left-1 md:top-[5rem] md:flex md:items-center md:justify-center md:cursor-pointer">
+      {/* <div className="hidden md:fixed md:w-fit md:h-full md:left-1 md:top-[5rem] md:flex md:items-center md:justify-center md:cursor-pointer">
         <a href="/staff_dashboard" className="w-fit h-fit">
           <img
             className="bg-slate-200 m-4 p-2 w-10 rounded-full hover:bg-slate-300 hover:shadow-md"
@@ -503,7 +503,7 @@ export const NewProfileDetails = () => {
             title="Go back"
           ></img>
         </a>
-      </div>
+      </div> */}
 
       {/* update conatainer  */}
       <div className="flex flex-wrap items-center justify-center space-x-2">
@@ -881,54 +881,50 @@ export const NewProfileDetails = () => {
               )}
             </div>
             {/* Comments  */}
-            <div className="bg-white rounded-xl shadow-xl mb-4 min-w-72 max-w-72 min-h-80 max-w-96 max-h-96">
-              <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
-                <h1 className="text-2xl font-bold text-center px-4">
-                  Feedback on Student-1 Project
+            <div className="bg-white rounded-2xl shadow-xl w-full max-w-md mx-auto mb-4 flex flex-col h-96">
+              {/* Header */}
+              <div className="bg-[#9e1c3f] text-white py-3 px-4 rounded-t-2xl">
+                <h1 className="text-xl font-semibold text-center">
+                  Feedback Project
                 </h1>
               </div>
-              <div className="flex flex-col  h-full">
-                <div className="overflow-auto h-fit">
-                  <div className="p-2 mb-1 text-lg  whitespace-pre-wrap overflow-y-scroll h-52">
-                    {/* Display previous comments */}
-                    {comments.prevComments &&
-                      comments.prevComments.map((comment, index) => (
-                        <div key={index} className="mb-2">
-                          <div className="flex flex-col ">
-                            <p className="flex justify-end text-xs">
-                              {comment.date}
-                            </p>
-                            <div className="flex justify-end">
-                              <p className="bg-slate-300 rounded-xl p-2">
-                                {comment.comment}
-                              </p>
-                            </div>
-                          </div>
-                          {/* <span className="font-bold">{comment.date}:</span> {comment.comment} */}
-                        </div>
-                      ))}
-                  </div>
-                </div>
-                <div className="flex flex-col items-center p-2">
-                  <textarea
-                    className="flex-grow w-full resize-none max-h-36 rounded-3xl pt-2  px-4 border-2 border-gray-300 outline-none bg-[#e2e8f0] "
-                    id="addComments"
-                    name="addComments"
-                    placeholder="Type a message..."
-                    value={comments.addComments}
-                    onChange={(eve) => {
-                      handleAddComments(eve);
-                      seteditedComments(eve.target.value);
-                    }}
-                  />
-                </div>
+
+              {/* Chat Body */}
+              <div className="flex-1 overflow-y-auto px-4 py-2 space-y-3">
+                {comments.prevComments &&
+                  comments.prevComments.map((comment, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col items-end space-y-1"
+                    >
+                      <p className="text-xs text-gray-400">{comment.date}</p>
+                      <div className="bg-gray-200 text-sm text-gray-800 rounded-xl px-4 py-2 max-w-xs break-words">
+                        {comment.comment}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+
+              {/* Input Box */}
+              <div className="p-3 border-t border-gray-200">
+                <textarea
+                  className="w-full resize-none max-h-32 bg-gray-100 border border-gray-300 rounded-full p-3 text-sm outline-none focus:ring-2 focus:ring-[#9e1c3f]"
+                  id="addComments"
+                  name="addComments"
+                  placeholder="Type your feedback..."
+                  value={comments.addComments}
+                  onChange={(eve) => {
+                    handleAddComments(eve);
+                    seteditedComments(eve.target.value);
+                  }}
+                />
               </div>
             </div>
 
             <div className=" bg-white rounded-xl shadow-xl mb-4 min-w-72 max-w-72 min-h-80 max-w-96 max-h-96">
               <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
                 <h1 className="text-2xl font-bold text-center px-4">
-                  Feedback on Student-2 Project
+                  Feedback Project
                 </h1>
               </div>
               <div className="flex flex-col  h-full">

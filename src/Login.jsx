@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import axios from "axios";
@@ -15,13 +15,14 @@ const Login = () => {
 
   const navigate = useNavigate();
   // const location = useLocation();
+  const otpRefs = useRef([]);
 
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const [verifyOTP, setVerifyOTP] = useState(false);
 
   const [receivedOTP, setReceivedOTP] = useState(0);
-  const [userOTP, setUserOTP] = useState(0);
+  const [userOTP, setUserOTP] = useState(["", "", "", "", "", ""]);
   const [userToken, setUserToken] = useState("");
   const [openNewPasswordContainer, setOpenNewPasswordContainer] =
     useState(false);
@@ -73,6 +74,12 @@ const Login = () => {
       navigate("/login");
     }
   }, []);
+
+  useEffect(() => {
+    if (verifyOTP) {
+      otpRefs.current[0]?.focus();
+    }
+  }, [verifyOTP]);
 
   const handleFirstLogin = async (e) => {
     e.preventDefault();
@@ -189,6 +196,45 @@ const Login = () => {
   //   }
   // };
 
+  const handleOtpChange = (e, idx) => {
+    const val = e.target.value.replace(/\D/, ""); // remove non-digit
+    if (!val) return;
+
+    const newOtp = [...userOTP];
+    newOtp[idx] = val;
+    setUserOTP(newOtp);
+
+    // Auto move to next box
+    if (idx < 5) otpRefs.current[idx + 1]?.focus();
+  };
+
+  // Handle backspace to go to previous input
+  const handleOtpKeyDown = (e, idx) => {
+    if (e.key === "Backspace") {
+      e.preventDefault(); // stop default backspace behavior
+      const newOtp = [...userOTP];
+
+      if (userOTP[idx]) {
+        // clear current box
+        newOtp[idx] = "";
+        setUserOTP(newOtp);
+      } else if (idx > 0) {
+        // move to previous box and clear it
+        newOtp[idx - 1] = "";
+        setUserOTP(newOtp);
+        otpRefs.current[idx - 1]?.focus();
+      }
+    }
+  };
+
+
+  const handleOtpSubmit = (e) => {
+    e.preventDefault();
+    const enteredOTP = userOTP.join("");
+    checkOTP(enteredOTP);
+  };
+
+
   const alertDelay = () => {
     setTimeout(() => {
       setError1("");
@@ -299,8 +345,7 @@ const Login = () => {
             </div>
 
             <div className={verifyOTP ? "visible" : "hidden"}>
-              {/* <div className={true ? " flex justify-center" : "hidden"}> */}
-              <div className=" flex justify-center">
+              <div className=" flex flex-col justify-center items-center">
                 <h1 className="p-4 font-semibold text-2xl">Verify OTP</h1>
               </div>
               <form>
@@ -308,7 +353,7 @@ const Login = () => {
                   <input
                     className="border-2 border-solid border-black rounded-lg px-2 h-12 my-4 w-fit tracking-widest"
                     type="number"
-                    placeholder="o  t  p"
+                    placeholder="MailId OTP"
                     maxLength="6"
                     value={formData.otp}
                     onChange={(e) => setUserOTP(e.target.value)}
@@ -334,9 +379,50 @@ const Login = () => {
               </form>
             </div>
 
+            {/* <div className={verifyOTP ? "flex items-center justify-center px-4 py-12 bg-gradient-to-tr from-[#fdfcfb] via-[#e2d1c3] to-[#fdfcfb]" : "hidden"}>
+              <div className="w-full max-w-md bg-white/30 backdrop-blur-md border border-white/40 rounded-2xl p-6 md:p-8 shadow-2xl space-y-6">
+
+                <div className="text-center">
+                  <h1 className="text-3xl font-bold text-gray-900">🔐 Verify OTP</h1>
+                  <p className="text-sm text-gray-700 mt-2">Enter the 6-digit code sent to your phone or email.</p>
+                </div>
+
+                <form onSubmit={handleOtpSubmit} className="space-y-6">
+
+                  <div className="flex justify-between gap-2">
+                    {userOTP.map((digit, idx) => (
+                      <input
+                        key={idx}
+                        ref={(el) => (otpRefs.current[idx] = el)}
+                        type="text"
+                        inputMode="numeric"
+                        maxLength={1}
+                        className="w-12 h-12 md:w-14 md:h-14 text-center text-xl font-bold text-gray-800 bg-white/80 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                        value={digit}
+                        onChange={(e) => handleOtpChange(e, idx)}
+                        onKeyDown={(e) => handleOtpKeyDown(e, idx)}
+                      />
+                    ))}
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full py-2.5 bg-red-700 text-white text-base font-semibold rounded-md hover:bg-red-600 transition"
+                  >
+                    Submit
+                  </button>
+
+                  {Error2 && <p className="text-center text-red-600 text-sm font-medium">{Error2}</p>}
+                </form>
+
+              </div>
+            </div> */}
+
+
+
+
+
             <div className={openNewPasswordContainer ? "visible" : "hidden"}>
-              {/* <div className={true ? " flex justify-center" : "hidden"}>
-               */}
               <div className=" flex justify-center">
                 <h1 className="p-4 font-semibold text-2xl">Set Password</h1>
               </div>
@@ -379,7 +465,7 @@ const Login = () => {
               </form>
             </div>
           </div>
-        </div>
+        </div >
 
         <Footer />
       </>

@@ -352,7 +352,7 @@ export function TeamProfile() {
               // onSubmit={handleProjectDetails}
               className="w-[98%] bg-slate-50 rounded-md flex flex-col justify-around items-center gap-2 "
             >
-              <div className="h-16 w-full bg-slate-200 flex items-center justify-center rounded-md border-[0.5px]">
+              {/* <div className="h-16 w-full bg-slate-200 flex items-center justify-center rounded-md border-[0.5px]">
                 <label
                   htmlFor="title"
                   className="h-full w-[30%] pl-5 flex justify-start items-center text-lg md:text-xl font-medium"
@@ -370,7 +370,7 @@ export function TeamProfile() {
                   spellCheck="off"
                   autoSave="off"
                 />
-              </div>
+              </div> */}
               <div className="h-16 w-full bg-slate-200 flex items-center justify-center rounded-md border-[0.5px]">
                 <label
                   htmlFor="title"

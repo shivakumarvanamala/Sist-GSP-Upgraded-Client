@@ -116,8 +116,7 @@ function AdminAddFaculty() {
               onClick={toggleDropdown}
               className="text-sm font-semibold rounded text-white focus:outline-none"
             >
-              &#9660;
-            </button>
+              <svg className="h-8 w-8 text-gray-100" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>            </button>
             {isDropdownOpen && (
               <div className="absolute top-10 right-0 bg-white text-gray-800 p-2 rounded shadow-md z-10">
                 <div className="flex flex-row justify-center items-center hover:bg-gray-200">
@@ -136,7 +135,7 @@ function AdminAddFaculty() {
         <div className="lg:w-1/4 md:w-2/4 s:w-2/4 xs:w-3/4 border p-4 bg-white bg-opacity-50 backdrop-filter rounded-lg shadow-lg">
           <div className="block">
             <div className="flex justify-center">
-              <h1 className="p-4 font-semibold text-2xl text-center">
+              <h1 className="text-3xl font-bold text-center text-[#9e1c3f]">
                 Add Faculty
               </h1>
             </div>

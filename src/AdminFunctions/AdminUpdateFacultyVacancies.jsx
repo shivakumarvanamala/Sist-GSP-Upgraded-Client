@@ -110,8 +110,7 @@ function AdminUpdateFacultyVacancies() {
               onClick={toggleDropdown}
               className="text-sm font-semibold rounded text-white focus:outline-none"
             >
-              &#9660;
-            </button>
+              <svg className="h-8 w-8 text-gray-100" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>            </button>
             {isDropdownOpen && (
               <div className="absolute top-10 right-0 bg-white text-gray-800 p-2 rounded shadow-md z-10">
                 <div className="flex flex-row justify-center items-center hover:bg-gray-200">
@@ -126,12 +125,13 @@ function AdminUpdateFacultyVacancies() {
         </div>
       </nav>
 
+
       <div className="login_bg px-10 flex justify-center items-center min-h-screen">
         <div className="lg:w-1/4 md:w-2/4 s:w-2/4 xs:w-3/4 border p-4 bg-white bg-opacity-50 backdrop-filter rounded-lg shadow-lg">
           <div className="block">
             <div className="flex justify-center">
               <h1 className="p-4 font-semibold text-2xl text-center">
-                Update Vacancies
+                Add Faculty Vacancies
               </h1>
             </div>
             <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
@@ -139,7 +139,7 @@ function AdminUpdateFacultyVacancies() {
                 type="text"
                 value={faculty}
                 onChange={(e) => setFaculty(e.target.value)}
-                placeholder="Enter Faculty MailI'd"
+                placeholder="Enter Faculty Mail Id"
                 required
                 className="border rounded-md p-2 text-black placeholder-gray-500 focus:ring-2 focus:ring-red-900 focus:outline-none"
               />
@@ -147,7 +147,7 @@ function AdminUpdateFacultyVacancies() {
                 type="number"
                 value={vacancies}
                 onChange={(e) => setVacancies(e.target.value)}
-                placeholder="Enter Number of Vacancies"
+                placeholder="Add Number of Vacancies"
                 required
                 className="border rounded-md p-2 text-black placeholder-gray-500 focus:ring-2 focus:ring-red-900 focus:outline-none"
               />
@@ -155,7 +155,7 @@ function AdminUpdateFacultyVacancies() {
                 type="submit"
                 className="bg-red-900 text-white px-6 py-2 rounded-md text-lg hover:bg-red-700 transition duration-300"
               >
-                Update Vacancies
+                Add Vacancies
               </button>
             </form>
             {error && <p className="mt-4 text-red-600 text-center">{error}</p>}

@@ -247,26 +247,25 @@ export default function SingleRegisterForm() {
 
       <form onSubmit={Submit}>
         <div className="m-4 border-solid border-2 rounded-lg">
-          <div className="bg-[#330716] m-4 rounded-lg  flex justify-center items-center font-bold text-white lg:text-4xl text-lg lg:py-24 py-20">
-            <p>Confirmation Details</p>
+          <div className="bg-[#821c3f] m-4 rounded-lg  flex justify-center items-center  lg:py-18 py-12">
+            <p className="font-bold text-white lg:text-4xl text-lg">CONFIRMATION DETAILS</p>
           </div>
 
           <div className="border-solid border-2 m-4 p-5">
             <div className="flex justify-center lg:space-y-0 space-y-2">
               <p className="lg:text-2xl text-xl font-bold pb-4">
-                Project Information
-              </p>
+                📝 Project Information              </p>
             </div>
 
             <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
               <div className="lg:w-full lg:mx-12">
                 <div>
-                  <label>Project Title</label>
+                  <label>Project Title<span className="text-red-600">*</span></label>
                   <br></br>
                   <input
                     className="border-2 h-12 px-4 w-full bg-gray-200 mb-2"
                     type="text"
-                    placeholder="Title..."
+                    placeholder="Enter Title..."
                     value={projTitle}
                     required
                     onChange={(e) => setProjTitle(e.target.value)}
@@ -276,12 +275,12 @@ export default function SingleRegisterForm() {
 
               <div className="lg:w-full lg:mx-12">
                 <div>
-                  <label>Project Domain</label>
+                  <label>Project Domain<span className="text-red-600">*</span></label>
                   <br></br>
                   <input
                     className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
                     type="text"
-                    placeholder="Domain..."
+                    placeholder="Enter Domain..."
                     value={projDomain}
                     required
                     onChange={(e) => setProjDomain(e.target.value)}
@@ -297,9 +296,8 @@ export default function SingleRegisterForm() {
                 className="border-2 p-4 w-full bg-gray-200"
                 rows="4"
                 type="text"
-                placeholder="Describe here..."
+                placeholder="Enter Describe here..."
                 value={projDesc}
-                required
                 onChange={(e) => setProjDesc(e.target.value)}
               />
             </div>
@@ -308,7 +306,7 @@ export default function SingleRegisterForm() {
           <div className="border-solid border-2 m-4 p-5">
             <div className="flex justify-center lg:space-y-0 space-y-2">
               <p className="lg:text-2xl text-xl font-bold pb-4">
-                Student Details
+                👩‍🎓 Student Details
               </p>
             </div>
 
@@ -317,11 +315,12 @@ export default function SingleRegisterForm() {
                 <div>
                   <label>Full Name</label>
                   <input
-                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4 focus:outline-none focus:ring-0 cursor-default"
                     type="text"
                     placeholder="Name"
                     value={userName}
                     required
+                    readOnly
                     onChange={(e) => setUserName(e.target.value)}
                   />
                 </div>
@@ -331,12 +330,12 @@ export default function SingleRegisterForm() {
                 <div>
                   <label>Register Number</label>
                   <input
-                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-6"
+                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-6 focus:outline-none focus:ring-0 cursor-default"
                     type="number"
                     placeholder="reg no"
                     value={userRegNo}
                     readOnly
-                    // onChange={(e) => setUserRegNo(e.target.value)}
+                  // onChange={(e) => setUserRegNo(e.target.value)}
                   />
                 </div>
               </div>
@@ -347,7 +346,7 @@ export default function SingleRegisterForm() {
                 <div>
                   <label>Email</label>
                   <input
-                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4 focus:outline-none focus:ring-0 cursor-default"
                     type="text"
                     value={userEmail}
                     readOnly
@@ -359,11 +358,12 @@ export default function SingleRegisterForm() {
                 <div>
                   <label>Phone Number</label>
                   <input
-                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4 focus:outline-none focus:ring-0 cursor-default"
                     type="number"
                     placeholder="phone"
                     value={userPhone}
                     required
+                    readOnly
                     maxLength={10}
                     onChange={(e) => setUserPhone(e.target.value)}
                   />
@@ -375,8 +375,7 @@ export default function SingleRegisterForm() {
           <div className="border-solid border-2 m-4 p-5">
             <div className="flex justify-center lg:space-y-0 space-y-2">
               <p className="lg:text-2xl text-xl font-bold pb-4">
-                Guide Details
-              </p>
+                🧑‍🏫 Guide Details              </p>
             </div>
 
             <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
@@ -384,7 +383,7 @@ export default function SingleRegisterForm() {
                 <div>
                   <label>Guide Name</label>
                   <input
-                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4 focus:outline-none focus:ring-0 cursor-default"
                     type="text"
                     value={guideName}
                     readOnly
@@ -396,7 +395,7 @@ export default function SingleRegisterForm() {
                 <div>
                   <label>Guide Email Id</label>
                   <input
-                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4 focus:outline-none focus:ring-0 cursor-default"
                     type="text"
                     value={guideMailId}
                     readOnly
@@ -411,89 +410,10 @@ export default function SingleRegisterForm() {
               type="submit"
               className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg"
             >
-              {isLoading ? "Loading..." : "SUBMIT"}
+              {isLoading ? "Loading..." : "📤 SUBMIT"}
             </button>
           </div>
         </div>
-
-        {/* <h1>Project Information</h1> */}
-
-        {/* <label>Project Title</label>
-          <input
-            className="border-2"
-            type="text"
-            placeholder=""
-            value={projTitle}
-            required
-            onChange={(e) => setProjTitle(e.target.value)}
-          /> */}
-
-        {/* <label>Project Domain</label>
-          <input
-            className="border-2 "
-            type="text"
-            placeholder=""
-            value={projDomain}
-            required
-            onChange={(e) => setProjDomain(e.target.value)}
-          /> */}
-
-        {/* <label>Project Description</label>
-          <input
-            className="border-2"
-            type="text"
-            placeholder=""
-            value={projDesc}
-            required
-            onChange={(e) => setProjDesc(e.target.value)}
-          /> */}
-
-        {/* <label>Full Name</label>
-          <input
-            className="border-2"
-            type="text"
-            placeholder=""
-            value={userName}
-            required
-            onChange={(e) => setUserName(e.target.value)}
-          /> */}
-
-        {/* <label>Register Number</label>
-          <input
-            className="border-2 "
-            type="number"
-            placeholder=""
-            value={userRegNo}
-            required
-            onChange={(e) => setUserRegNo(e.target.value)}
-          /> */}
-
-        {/* <label>Email</label>
-          <input className="border-2" type="text" value={userEmail} readOnly /> */}
-
-        {/* <label>Phone Number</label>
-          <input
-            className="border-2"
-            type="tel"
-            placeholder=""
-            value={userPhone}
-            required
-            onChange={(e) => setUserPhone(e.target.value)}
-          /> */}
-
-        {/* <label>Guide Name</label>
-          <input className="border-2" type="text" value={guideName} readOnly /> */}
-
-        {/* <label>Guide Email Id</label>
-          <input
-            className="border-2"
-            type="text"
-            value={guideMailId}
-            readOnly
-          /> */}
-        {/* <button type="submit" className="h-10 p-2 bg-red-600 text-black">
-        {isLoading ? "Loading..." : "SUBMIT"}
-        </button> */}
       </form>
 
       <Footer />

@@ -124,14 +124,14 @@ const Dashboard = () => {
       if (
         !editedProjectDetails.projectTitle ||
         !editedProjectDetails.projectDomain ||
-        !editedProjectDetails.projectDesc ||
-        !projectType
+        !editedProjectDetails.projectDesc
+        // !projectType
       ) {
         // console.warn("hii")
 
         // alert('Please fill in all the fields before submitting.');
         setAlert(true);
-        setAlertMessage("Select Your Project Category");
+        // setAlertMessage("Select Your Project Category");
         setAlertType("fail");
         alertDelay();
         return;
@@ -142,7 +142,7 @@ const Dashboard = () => {
           projectTitle: editedProjectDetails.projectTitle,
           projectDesc: editedProjectDetails.projectDesc,
           projectDomain: editedProjectDetails.projectDomain,
-          projectType: projectType,
+          // projectType: projectType,
         };
 
         const data = {
@@ -442,9 +442,6 @@ const Dashboard = () => {
     navigate("/login");
   };
 
-  const [projectpptFile, setProjectPPTFile] = useState(null);
-  const [projectDocFile, setProjectDocFile] = useState(null);
-  const [researchPaperFile, setResearchPaperFile] = useState(null);
 
   const sendPptFile = async () => {
     const data = new FormData();
@@ -526,8 +523,6 @@ const Dashboard = () => {
   };
 
   const [showMsg, setShowmsg] = useState(false);
-
-  const [showMenu, setShowMenu] = useState(false);
 
   return (
     <>
@@ -699,7 +694,7 @@ const Dashboard = () => {
 
         <div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
           <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">
-            Student-1 Project Details
+            Project Details
           </h1>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 mx-2">
@@ -727,11 +722,10 @@ const Dashboard = () => {
                 onClick={() => {
                   setShowmsg(true);
                 }}
-                title={`${
-                  editProjectDetails || showMsg
-                    ? "Click on Edit button below"
-                    : ""
-                }`}
+                title={`${editProjectDetails || showMsg
+                  ? "Click on Edit button below"
+                  : ""
+                  }`}
               />
             </div>
 
@@ -754,119 +748,6 @@ const Dashboard = () => {
                 readOnly={!isEditable}
               />
             </div>
-
-            {/* Project Option  */}
-            {isEditable && (
-              <div>
-                <button
-                  type="button"
-                  class="inline-flex w-fit justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                  onClick={() => {
-                    setShowMenu(!showMenu);
-                  }}
-                >
-                  {projectType ? projectType : "Category"}
-                  <svg
-                    class="-mr-1 h-5 w-5 text-gray-400"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </button>
-                {showMenu && (
-                  <div
-                    class=" w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="menu-button"
-                    tabindex="-1"
-                  >
-                    <div class="py-1" role="none">
-                      <button
-                        onClick={() => {
-                          setShowMenu(!showMenu);
-                          setprojectType("HCL PT2 Internship");
-                        }}
-                        class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                      >
-                        HCL PT2 Internship
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowMenu(!showMenu);
-                          setprojectType("Pride Certification");
-                        }}
-                        class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                      >
-                        Pride Certification
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowMenu(!showMenu);
-                          setprojectType("NPTEL");
-                        }}
-                        class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                      >
-                        NPTEL
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowMenu(!showMenu);
-                          setprojectType("Own Project");
-                        }}
-                        class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                      >
-                        Own Project
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowMenu(!showMenu);
-                          setprojectType("Oracle Internship");
-                        }}
-                        class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                      >
-                        Oracle Internship
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowMenu(!showMenu);
-                          setprojectType("Private/Government Internship");
-                        }}
-                        class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                      >
-                        Private/Government Internship
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowMenu(!showMenu);
-                          setprojectType("HCL System Engineering");
-                        }}
-                        class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                      >
-                        {" "}
-                        HCL System Engineering
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowMenu(!showMenu);
-                          setprojectType("Any Other");
-                        }}
-                        class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                      >
-                        Any Other
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-            {/* Project Option  */}
           </div>
 
           {/* Description */}
@@ -911,523 +792,60 @@ const Dashboard = () => {
           )}
         </div>
 
-        {/* Person2 Project Details */}
-        {StudentData[0]["p2name"] && (
-          <div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
-            <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">
-              Student-2 Project Details
-            </h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 mx-2">
-              {/* Title */}
-              <div>
-                <label className="block text-lg font-semibold text-gray-700 mb-2">
-                  Title:
-                </label>
-                <input
-                  type="text"
-                  name="projectTitle"
-                  value={
-                    isEditable2
-                      ? editedProjectDetails2.projectTitle
-                      : projectDetails2[0]["projectTitle"]
-                  }
-                  // value = {isEditable? projectDetails[0]['projectTitle'] : projectDetails[0]['projectTitle']}
-                  // defaultValue={projectDetails[0]['projectTitle']}
-                  content={projectDetails2[0]["projectTitle"]}
-                  contentEditable
-                  onChange={handleInputChange2}
-                  className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
-                  style={{ backgroundColor: "#f0f0f0", color: "#333" }}
-                  readOnly={!isEditable2}
-                  onClick={() => {
-                    setShowmsg(true);
-                  }}
-                  title={`${
-                    editProjectDetails2 || showMsg
-                      ? "Click on Edit button below"
-                      : ""
-                  }`}
-                />
-              </div>
-
-              {/* Domain */}
-              <div>
-                <label className="block text-lg font-semibold text-gray-700 mb-2">
-                  Domain:
-                </label>
-                <input
-                  type="text"
-                  name="projectDomain"
-                  value={
-                    isEditable2
-                      ? editedProjectDetails2.projectDomain
-                      : projectDetails2[0]["projectDomain"]
-                  }
-                  onChange={handleInputChange2}
-                  className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
-                  style={{ backgroundColor: "#f0f0f0", color: "#333" }}
-                  readOnly={!isEditable2}
-                />
-              </div>
-
-              {/* Project Option  */}
-              {isEditable2 && (
-                <div>
-                  <button
-                    type="button"
-                    class="inline-flex w-fit justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                    onClick={() => {
-                      setShowMenu(!showMenu);
-                    }}
-                  >
-                    {projectType2 ? projectType2 : "Category"}
-                    <svg
-                      class="-mr-1 h-5 w-5 text-gray-400"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </button>
-                  {showMenu && (
-                    <div
-                      class=" w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                      role="menu"
-                      aria-orientation="vertical"
-                      aria-labelledby="menu-button"
-                      tabindex="-1"
-                    >
-                      <div class="py-1" role="none">
-                        <button
-                          onClick={() => {
-                            setShowMenu(!showMenu);
-                            setprojectType2("HCL PT2 Internship");
-                          }}
-                          class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                        >
-                          HCL PT2 Internship
-                        </button>
-                        <button
-                          onClick={() => {
-                            setShowMenu(!showMenu);
-                            setprojectType2("Pride Certification");
-                          }}
-                          class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                        >
-                          Pride Certification
-                        </button>
-                        <button
-                          onClick={() => {
-                            setShowMenu(!showMenu);
-                            setprojectType2("NPTEL");
-                          }}
-                          class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                        >
-                          NPTEL
-                        </button>
-                        <button
-                          onClick={() => {
-                            setShowMenu(!showMenu);
-                            setprojectType2("Own Project");
-                          }}
-                          class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                        >
-                          Own Project
-                        </button>
-                        <button
-                          onClick={() => {
-                            setShowMenu(!showMenu);
-                            setprojectType2("Oracle Internship");
-                          }}
-                          class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                        >
-                          Oracle Internship
-                        </button>
-                        <button
-                          onClick={() => {
-                            setShowMenu(!showMenu);
-                            setprojectType2("Private/Government Internship");
-                          }}
-                          class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                        >
-                          Private/Government Internship
-                        </button>
-                        <button
-                          onClick={() => {
-                            setShowMenu(!showMenu);
-                            setprojectType2("HCL System Engineering");
-                          }}
-                          class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                        >
-                          {" "}
-                          HCL System Engineering
-                        </button>
-                        <button
-                          onClick={() => {
-                            setShowMenu(!showMenu);
-                            setprojectType2("Any Other");
-                          }}
-                          class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                        >
-                          Any Other
-                        </button>
+        <div className="mx-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-white rounded-xl shadow-xl mb-4">
+              <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">
+                Guide Feedback on {StudentData[0]["regNo"]} Project:
+              </h1>
+              <div className="overflow-auto m-2 max-h-60">
+                {/* Adjust max height as needed */}
+                {guideComments[0] ? (
+                  guideComments.map((comment, index) => {
+                    const date = Object.keys(comment)[0];
+                    const text = comment[date];
+                    return (
+                      <div className="bg-gray-200 p-3 rounded mb-2" key={index}>
+                        <p className="text-sm text-gray-600">Date: {date}</p>
+                        <p className="text-base text-gray-800">Comment: {text}</p>
                       </div>
-                    </div>
-                  )}
-                </div>
-              )}
-              {/* Project Option  */}
-            </div>
-
-            {/* Description */}
-            <div className="py-4 mx-2">
-              <label className="block text-lg font-semibold text-gray-700">
-                Description:
-              </label>
-              <textarea
-                name="projectDesc"
-                value={
-                  isEditable2
-                    ? editedProjectDetails2.projectDesc
-                    : projectDetails2[0]["projectDesc"]
-                }
-                onChange={handleInputChange2}
-                className="w-full p-2 border rounded focus:outline-none focus:border-blue-500 h-36"
-                style={{ backgroundColor: "#f0f0f0", color: "#333" }}
-                readOnly={!isEditable2}
-              />
-            </div>
-            <br></br>
-
-            {editProjectDetails2 ? (
-              <div className="flex justify-center space-x-4 mb-4">
-                <button
-                  onClick={toggleEdit2}
-                  className="bg-blue-500 text-white px-4  py-3 rounded focus:outline-none"
-                >
-                  {isEditable2 ? "Cancel" : "Edit"}
-                </button>
-                {isEditable2 && !isSubmitting2 && (
-                  <button
-                    onClick={handleUpdateProjectDetails2}
-                    className="bg-blue-500 text-white p-2 rounded focus:outline-none"
-                  >
-                    Submit
-                  </button>
-                )}
-              </div>
-            ) : (
-              <p></p>
-            )}
-          </div>
-        )}
-        {/* Person2 Project Details */}
-
-        {/* <div>
-      {StudentData[0].editProjectDetails ? (
-        <div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
-          <button onClick={handleSubmit} className="bg-blue-500 text-white p-2 rounded focus:outline-none">
-            Submit
-          </button>
-        </div>
-      ) : (
-        <button onClick={handleEditClick} className="bg-blue-500 text-white p-2 rounded focus:outline-none">
-          Edit Project Details
-        </button>
-      )}
-    </div> */}
-
-        <div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
-          <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">
-            Project Status
-          </h1>
-
-          <h1 className="text-3xl font-bold text-gray-800 mb-4 my-2 mx-3">
-            Guide Approval status
-          </h1>
-
-          <div className="flex flex-col md:flex-row md:items-start md:gap-4 mx-3">
-            {/* Guide Approval */}
-            <button
-              onClick={() => toggleStatus("guideApproval")}
-              className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${
-                projectStatus.guideApproval
-                  ? "bg-green-500 text-white"
-                  : "bg-red-500 text-white"
-              }`}
-            >
-              Guide Approval
-            </button>
-
-            {/* Documentation */}
-            <button
-              onClick={() => toggleStatus("documentation")}
-              className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${
-                projectStatus.documentation
-                  ? "bg-green-500 text-white"
-                  : "bg-red-500 text-white"
-              }`}
-            >
-              Documentation
-            </button>
-
-            {/* PPT */}
-            <button
-              onClick={() => toggleStatus("ppt")}
-              className={`text-lg font-bold p-2 rounded ${
-                projectStatus.ppt
-                  ? "bg-green-500 text-white"
-                  : "bg-red-500 text-white"
-              }`}
-            >
-              PPT
-            </button>
-          </div>
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-4 my-2 mx-3">
-              Research paper status
-            </h1>
-            <div className="flex flex-col md:flex-row md:items-start md:gap-4 mx-3 my-3">
-              {/* Approval */}
-              <button
-                onClick={() => toggleStatus("researchPaper")}
-                className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${
-                  projectStatus.researchPaper.approval
-                    ? "bg-green-500 text-white"
-                    : "bg-red-500 text-white"
-                }`}
-              >
-                Approval
-              </button>
-
-              {/* Communicated */}
-              <button
-                onClick={() => toggleStatus("researchPaper")}
-                className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${
-                  projectStatus.researchPaper.communicated
-                    ? "bg-green-500 text-white"
-                    : "bg-red-500 text-white"
-                }`}
-              >
-                Communicated
-              </button>
-
-              {/* Accepted */}
-              <button
-                onClick={() => toggleStatus("researchPaper")}
-                className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${
-                  projectStatus.researchPaper.accepted
-                    ? "bg-green-500 text-white"
-                    : "bg-red-500 text-white"
-                }`}
-              >
-                Accepted
-              </button>
-
-              {/* Payment */}
-              <button
-                onClick={() => toggleStatus("researchPaper")}
-                className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${
-                  projectStatus.researchPaper.payment
-                    ? "bg-green-500 text-white"
-                    : "bg-red-500 text-white"
-                }`}
-              >
-                Payment
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="mx-4 hidden bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
-          <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">
-            Project Submissions
-          </h1>
-          <div className="flex flex-col gap-4 m-4 md:flex-row md:items-center">
-            <div className="mb-4 md:flex md:items-center flex-grow">
-              <div className="flex flex-col">
-                <h4 className="text-lg font-semibold mb-2">
-                  <b>PPT document</b>
-                </h4>
-                <div className="flex space-x-4 items-center">
-                  {documentation[0]["ppt"] === null ||
-                  documentation[0]["ppt"] === "" ? (
-                    <input
-                      type="file"
-                      accept=".ppt, .pptx"
-                      onChange={(e) => {
-                        setProjectPPTFile(e.target.files[0]);
-                      }}
-                      className="w-full p-2 border rounded focus:outline-none focus:border-red-500 bg-[#9e1c3f] text-white"
-                    />
-                  ) : (
-                    <p></p>
-                  )}
-                </div>
-                <br></br>
-                {documentation[0]["ppt"] === null ||
-                documentation[0]["ppt"] === "" ? (
-                  <button
-                    onClick={sendPptFile}
-                    className="p-3 mb-2 mx-2 bg-[#977e3d] text-white rounded transition duration-300 w-full md:w-auto"
-                  >
-                    Upload
-                  </button>
+                    );
+                  })
                 ) : (
-                  <button
-                    onClick={() =>
-                      window.open(documentation[0]["ppt"], "_blank")
-                    }
-                    className="p-3 mb-2 mx-2 bg-[#C08261] text-white rounded transition duration-300 w-full md:w-auto"
-                  >
-                    Open PPT
-                  </button>
-                )}
-                {/* <p>{documentation.documentation}</p> */}
-              </div>
-            </div>
-            <div className="mb-4 md:flex md:items-center flex-grow">
-              <div className="flex flex-col">
-                <h4 className="text-lg font-semibold mb-2">
-                  <b>Project document</b>
-                </h4>
-                <div className="flex space-x-4 items-center">
-                  {documentation[0]["documentation"] === null ||
-                  documentation[0]["documentation"] === "" ? (
-                    <input
-                      type="file"
-                      accept=".doc, .docx, .pdf"
-                      onChange={(e) => {
-                        setProjectDocFile(e.target.files[0]);
-                      }}
-                      className="w-full p-2 border rounded focus:outline-none focus:border-blue-500 bg-[#9e1c3f] text-white"
-                    />
-                  ) : (
-                    <p></p>
-                  )}
-                </div>
-                <br></br>
-                {documentation[0]["documentation"] === null ||
-                documentation[0]["documentation"] === "" ? (
-                  <button
-                    onClick={sendDocFile}
-                    className="p-3 mb-2 mx-2 bg-[#977e3d] text-white rounded transition duration-300 w-full md:w-auto"
-                  >
-                    Upload
-                  </button>
-                ) : (
-                  <button
-                    onClick={() =>
-                      window.open(documentation[0]["documentation"], "_blank")
-                    }
-                    className="p-3 mb-2 mx-2 bg-[#C08261] text-white rounded transition duration-300 w-full md:w-auto"
-                  >
-                    Open Document
-                  </button>
+                  <p className="p-4 flex justify-center">No comments yet</p>
                 )}
               </div>
             </div>
-            <div className="mb-4 md:flex md:items-center flex-grow">
-              <div className="flex flex-col">
-                <h4 className="text-lg font-semibold mb-2">
-                  <b>Research paper document</b>
-                </h4>
-                {/* {documentation[0]["researchPaper"]} */}
-                <div className="flex space-x-4 items-center">
-                  {documentation[0]["researchPaper"] === null ||
-                  documentation[0]["researchPaper"] === "" ? (
-                    <input
-                      type="file"
-                      accept=".pdf"
-                      onChange={(e) => {
-                        setResearchPaperFile(e.target.files[0]);
-                      }}
-                      className="w-full p-2 border rounded focus:outline-none focus:border-blue-500 bg-[#9e1c3f] text-white"
-                    />
-                  ) : (
-                    <p></p>
-                  )}
-                </div>
-                <br></br>
-                {documentation[0]["researchPaper"] === null ||
-                documentation[0]["researchPaper"] === "" ? (
-                  <button
-                    onClick={sendRspaperFile}
-                    className="p-3 mb-2 mx-2 bg-[#977e3d] text-white rounded transition duration-300 w-full md:w-auto"
-                  >
-                    Upload
-                  </button>
-                ) : (
-                  <button
-                    onClick={() =>
-                      window.open(documentation[0]["researchPaper"], "_blank")
-                    }
-                    className="p-3 mb-2 mx-2 bg-[#C08261] text-white rounded transition duration-300 w-full md:w-auto"
-                  >
-                    Open Research Paper
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-center"></div>
-        </div>
 
-        <div className="mx-4 bg-white rounded-xl shadow-xl mb-4 ">
-          <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">
-            Guide Feedback on student 1 Project
-          </h1>
-          <div className="overflow-auto m-2 max-h-60">
-            {" "}
-            {/* Adjust max height as needed */}
-            {guideComments[0] ? (
-              guideComments.map((comment, index) => {
-                const date = Object.keys(comment)[0];
-                const text = comment[date];
-                return (
-                  <div className="bg-gray-200 p-3 rounded mb-2" key={index}>
-                    <p className="text-sm text-gray-600">Date: {date}</p>
-                    <p className="text-base text-gray-800">Comment: {text}</p>
-                  </div>
-                );
-              })
-            ) : (
-              <p className="p-4 flex justify-center">No comments yet</p>
+            {StudentData[0]["p2name"] && (
+              <div className="bg-white rounded-xl shadow-xl mb-4">
+                <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">
+                  Guide Feedback on {StudentData[0]["p2regNo"]} Project:
+
+                </h1>
+                <div className="overflow-auto m-2 max-h-60">
+                  {/* Adjust max height as needed */}
+                  {guideComments2[0] ? (
+                    guideComments2.map((comment, index) => {
+                      const date = Object.keys(comment)[0];
+                      const text = comment[date];
+                      return (
+                        <div className="bg-gray-200 p-3 rounded mb-2" key={index}>
+                          <p className="text-sm text-gray-600">Date: {date}</p>
+                          <p className="text-base text-gray-800">Comment: {text}</p>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <p className="p-4 flex justify-center">No comments yet</p>
+                  )}
+                </div>
+              </div>
             )}
           </div>
         </div>
 
-        {StudentData[0]["p2name"] && (
-          <div className="mx-4 bg-white rounded-xl shadow-xl mb-4 ">
-            <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">
-              Guide Feedback on Student 2 Project
-            </h1>
-            <div className="overflow-auto m-2 max-h-60">
-              {" "}
-              {/* Adjust max height as needed */}
-              {guideComments2[0] ? (
-                guideComments2.map((comment, index) => {
-                  const date = Object.keys(comment)[0];
-                  const text = comment[date];
-                  return (
-                    <div className="bg-gray-200 p-3 rounded mb-2" key={index}>
-                      <p className="text-sm text-gray-600">Date: {date}</p>
-                      <p className="text-base text-gray-800">Comment: {text}</p>
-                    </div>
-                  );
-                })
-              ) : (
-                <p className="p-4 flex justify-center">No comments yet</p>
-              )}
-            </div>
-          </div>
-        )}
       </div>
     </>
   );
