@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiChevronDown } from "react-icons/fi";
-import { HiOutlineLogout } from "react-icons/hi";
+// import { FiChevronDown } from "react-icons/fi";
+// import { HiOutlineLogout } from "react-icons/hi";
 import axios from "axios";
 
 import AdminNavbar from "./AdminNavbar";
@@ -32,10 +32,10 @@ function AdminDeleteTeam() {
     if (!match) return false;
 
     const year = parseInt(match[1], 10);
-    const number = parseInt(match[2], 10);
+    // const number = parseInt(match[2], 10);
     const currentYearLastTwo = new Date().getFullYear() % 100;
 
-    return year === currentYearLastTwo && number < 1700;
+    return year === (currentYearLastTwo + 1);
   };
 
   const handleSubmit = async (event) => {
@@ -43,7 +43,7 @@ function AdminDeleteTeam() {
 
     if (!teamId || !validateTeamId(teamId)) {
       setError(
-        'Team ID must be in the format CSE-yy-NNNN, where "yy" is the current year and "NNNN" is less than 1700.'
+        'Team ID must be in the format CSE-yy-NNNN, where "yy" is the current final year batch.'
       );
       return;
     }
