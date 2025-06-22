@@ -44,18 +44,18 @@ function App() {
           <Route path="/staff_login" element={<StaffLogin />} />
           <Route path="/staff_dashboard" element={<StaffDashboard />} />
 
-          <Route
+          {/* <Route
             path="/staff_dashboard/profile_details"
             element={<NewProfileDetails />}
-          />
-          <Route
+          /> */}
+          {/* <Route
             path="/staff_dashboard/profile_details/team_profile"
             element={<TeamProfile />}
-          />
-          <Route
+          /> */}
+          {/* <Route
             path="/staff_dashboard/profile_details/team_profile2"
             element={<TeamProfile2 />}
-          />
+          /> */}
 
           <Route
             path="/staff_dashboard/change_password"
@@ -65,10 +65,10 @@ function App() {
             path="/staff_dashboard/add_problem_statement"
             element={<AddProblemStatement />}
           />
-          <Route
+          {/* <Route
             path="/staff_dashboard/select_student"
             element={<Teambyguide />}
-          />
+          /> */}
 
           <Route
             path="/dashboard/student_Password_change"

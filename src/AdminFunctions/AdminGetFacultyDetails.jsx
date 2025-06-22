@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import LoadingScreen from "../shared/Loader";
-import sist_logo_login from "../assets/sist_logo_login.png";
-import log_out from "../assets/svgs/log_out.svg";
+// import sist_logo_login from "../assets/sist_logo_login.png";
+// import log_out from "../assets/svgs/log_out.svg";
+
+import AdminNavbar from "./AdminNavbar";
 import Footer from "../shared/Footer";
 
 import AdminDisplayFaculty from "../AdminDisplayFaculty"
@@ -14,7 +16,7 @@ function AdminGetFacultyDetails() {
   const [facultyList, setFacultyList] = useState([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  // const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [inputValue, setInputValue] = useState("");
@@ -41,9 +43,9 @@ function AdminGetFacultyDetails() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
-  };
+  // const toggleDropdown = () => {
+  //   setDropdownOpen(!isDropdownOpen);
+  // };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -88,11 +90,11 @@ function AdminGetFacultyDetails() {
   }, [searchQuery, page]);
 
 
-  const adminLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("adminMailId");
-    navigate("/");
-  };
+  // const adminLogout = () => {
+  //   localStorage.removeItem("token");
+  //   localStorage.removeItem("adminMailId");
+  //   navigate("/");
+  // };
 
   const guideSerialNumber = (page - 1) * limit + 1;
 
@@ -113,79 +115,11 @@ function AdminGetFacultyDetails() {
       })
       .join(" ");
 
-  // return (
-  //   <div className="App">
-  //     {isLoading && <LoadingScreen />}
-  // <nav className="bg-[#9e1c3f] text-white p-4">
-  //   <div className="container mx-auto flex justify-between items-center">
-  //     <div className="flex items-center">
-  //       <a href="/">
-  //         <img
-  //           src={sist_logo_login}
-  //           alt="Logo"
-  //           className="h-12 w-auto float-start"
-  //         />
-  //       </a>
-  //     </div>
-  //     <div className="flex items-center relative">
-  //       <button
-  //         onClick={toggleDropdown}
-  //         className="text-sm font-semibold rounded text-white focus:outline-none"
-  //       >
-  //         <svg className="h-8 w-8 text-gray-100" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>            </button>
-  //       {isDropdownOpen && (
-  //         <div className="absolute top-10 right-0 bg-white text-gray-800 p-2 rounded shadow-md z-10">
-  //           <div className="flex flex-row justify-center items-center hover:bg-gray-200">
-  //             <img className="h-4 w-4" src={log_out} alt="LogOut" />
-  //             <button onClick={adminLogout} className="block p-2">
-  //               Logout
-  //             </button>
-  //           </div>
-  //         </div>
-  //       )}
-  //     </div>
-  //   </div>
-  // </nav>
-
-  //     <div className="login_bg px-10 flex justify-center items-center min-h-screen">
-  //       <div className="lg:w-3/4 md:w-4/5 s:w-4/5 xs:w-3/4 border p-4 bg-white bg-opacity-50 backdrop-filter rounded-lg shadow-lg">
-  //         <div className="block">
-  //           <div className="flex justify-center">
-  //             <h1 className="text-3xl font-bold text-center text-[#9e1c3f]">
-  //               Faculty Details
-  //             </h1>
-  //           </div>
-  //           {error && <p className="mt-4 text-red-600 text-center">{error}</p>}
-  //           <table className="min-w-full bg-white border border-gray-300">
-  //             <thead>
-  //               <tr className="bg-gray-200">
-  //                 <th className="border px-4 py-2">Name</th>
-  //                 <th className="border px-4 py-2">Department</th>
-  //                 <th className="border px-4 py-2">Email</th>
-  //                 <th className="border px-4 py-2">Phone</th>
-  //               </tr>
-  //             </thead>
-  //             <tbody>
-  //               {facultyList.map((faculty, index) => (
-  //                 <tr key={index} className="hover:bg-gray-100">
-  //                   <td className="border px-4 py-2">{faculty.name}</td>
-  //                   <td className="border px-4 py-2">{faculty.department}</td>
-  //                   <td className="border px-4 py-2">{faculty.email}</td>
-  //                   <td className="border px-4 py-2">{faculty.phone}</td>
-  //                 </tr>
-  //               ))}
-  //             </tbody>
-  //           </table>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 
   return (
     <>
       {isLoading && <LoadingScreen />}
-      <nav className="bg-[#9e1c3f] text-white p-4">
+      {/* <nav className="bg-[#9e1c3f] text-white p-4">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center">
             <a href="/">
@@ -214,9 +148,9 @@ function AdminGetFacultyDetails() {
             )}
           </div>
         </div>
-      </nav>
+      </nav> */}
 
-
+      <AdminNavbar />
       <div className="bg-[#9e1c3f] flex flex-col lg:flex-row items-center justify-between mt-1 mb-5 px-4 py-3 sticky top-0 z-50 shadow-md space-y-2 lg:space-y-0">
         {/* <div className="flex flex-row items-center justify-center" /> */}
         <div className="flex flex-row items-center justify-center">

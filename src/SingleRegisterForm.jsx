@@ -344,18 +344,6 @@ export default function SingleRegisterForm() {
             <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
               <div className="lg:w-full lg:mx-12">
                 <div>
-                  <label>Email</label>
-                  <input
-                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4 focus:outline-none focus:ring-0 cursor-default"
-                    type="text"
-                    value={userEmail}
-                    readOnly
-                  />
-                </div>
-              </div>
-
-              <div className="lg:w-full lg:mx-12">
-                <div>
                   <label>Phone Number</label>
                   <input
                     className="border-2 h-12 px-4 w-full bg-gray-200 mb-4 focus:outline-none focus:ring-0 cursor-default"
@@ -369,6 +357,18 @@ export default function SingleRegisterForm() {
                   />
                 </div>
               </div>
+              <div className="lg:w-full lg:mx-12">
+                <div>
+                  <label>Email</label>
+                  <input
+                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4 focus:outline-none focus:ring-0 cursor-default"
+                    type="text"
+                    value={userEmail}
+                    readOnly
+                  />
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -410,7 +410,7 @@ export default function SingleRegisterForm() {
               type="submit"
               className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg"
             >
-              {isLoading ? "Loading..." : "📤 SUBMIT"}
+              {isLoading ? "Loading..." : "SUBMIT"}
             </button>
           </div>
         </div>

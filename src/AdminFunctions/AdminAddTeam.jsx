@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Footer from "../shared/Footer";
+// import Footer from "../shared/Footer";
 import LoadingScreen from "../shared/Loader";
-import sist_logo_login from "../assets/sist_logo_login.png";
-import log_out from "../assets/svgs/log_out.svg";
+import Alert from "../shared/Alert";
+
+import AdminNavbar from "./AdminNavbar";
+// import sist_logo_login from "../assets/sist_logo_login.png";
+// import log_out from "../assets/svgs/log_out.svg";
 
 function AdminAddTeam() {
   const SERVERPATH = import.meta.env.VITE_SERVERPATH;
@@ -14,6 +18,12 @@ function AdminAddTeam() {
   const [isTeamSize2, setIsTeamSize2] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+
+  const [alert, setAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState();
+  const [alertType, setAlertType] = useState();
+
+  const navigate = useNavigate()
 
   const handleTeamSizeChange = (event) => {
     setIsTeamSize2(event.target.checked);
@@ -69,15 +79,24 @@ function AdminAddTeam() {
         SERVERPATH + "/staffLogin/staffDashboard/selectStudent/" + facultyEmail,
         formData
       );
-      setMessage(response.data.message);
+      if (response.data.message == "success") {
+        setMessage(response.data.message);
+      }
+      else {
+        setError(response.data.message);
+
+      }
+      // setAlertMessage(response.data.message);
       setFacultyEmail("");
       setStudent1("");
       setStudent2("");
     } catch (error) {
       if (error.response) {
-        setMessage(error.response.data.message || "Something went wrong.");
+        // setMessage(error.response.data.message || "Something went wrong.");
+        setError(error.response.data.message || "Something went wrong.");
       } else {
-        setMessage("Failed to connect to the server.");
+        // setMessage("Failed to connect to the server.");
+        setError("Failed to connect to the server.");
       }
     }
     setIsLoading(false);
@@ -91,10 +110,10 @@ function AdminAddTeam() {
     }, 3000); // 3000 milliseconds = 3 seconds
   };
 
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
-  };
+  // const [isDropdownOpen, setDropdownOpen] = useState(false);
+  // const toggleDropdown = () => {
+  //   setDropdownOpen(!isDropdownOpen);
+  // };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -126,17 +145,38 @@ function AdminAddTeam() {
     }
   }, [location]);
 
-  const adminLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("adminMailId");
-    navigate("/");
-  };
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => setError(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
+
+
+  // const adminLogout = () => {
+  //   localStorage.removeItem("token");
+  //   localStorage.removeItem("adminMailId");
+  //   navigate("/");
+  // };
 
   return (
     <div className="App">
       {isLoading && <LoadingScreen />}
+      <div
+        className={`flex items-center justify-center ${alert ? "" : "hidden"} `}
+      >
+        <Alert type={alertType} message={alertMessage} />
+      </div>
 
-      <nav className="bg-[#9e1c3f] text-white p-4">
+      {/* <nav className="bg-[#9e1c3f] text-white p-4">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center">
             <a href="/">
@@ -165,9 +205,10 @@ function AdminAddTeam() {
             )}
           </div>
         </div>
-      </nav>
+      </nav> */}
+      <AdminNavbar />
 
-      <div className="login_bg bg-cover bg-center flex items-center justify-center px-4 py-10">
+      <div className="admin_login_bg bg-cover bg-center flex items-center justify-center px-4 py-10">
         <div className="backdrop-filter bg-white/30 bg-opacity-60 shadow-2xl rounded-3xl p-10 w-full max-w-xl space-y-8 text-black">
           <h1 className="text-3xl font-bold text-center text-[#9e1c3f]">Add a Team</h1>
 
@@ -225,17 +266,38 @@ function AdminAddTeam() {
             </button>
           </form>
 
+
+          {/* Status Messages */}
           {error && (
-            <p className="text-center text-red-600 font-medium text-sm">{error}</p>
+            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl">
+              <p className="text-red-700 text-center font-medium flex items-center justify-center">
+                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+                {error}
+              </p>
+            </div>
           )}
+
           {message && (
-            <p className="text-center text-green-600 font-medium text-sm">
-              {message}
-            </p>
+            <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-xl">
+              <p className="text-green-700 text-center font-medium flex items-center justify-center">
+                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                {message}
+              </p>
+            </div>
           )}
         </div>
       </div>
-      <Footer />
+      <footer
+        className="w-full h-8 absolute bottom-0 bg-slate-100 flex items-center justify-center text-black mt-auto"
+        onClick={() => setOpen(false)}
+      >
+        <b>&copy;</b>&nbsp;
+        2025 Sathyabama University. All rights reserved.
+      </footer>
 
     </div>
   );

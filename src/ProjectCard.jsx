@@ -72,11 +72,11 @@ export const ProjectCard = ({
       </p>
       <div className="flex items-center justify-center w-full pb-2">
         <button
-          onClick={() => {
-            localStorage.setItem("projectId", projectId);
-            navigate('/staff_dashboard/profile_details');
-          }}
-          className="w-[95%] h-10 flex items-center justify-center bg-[#fd4e00] rounded-md font-semibold text-white hover:scale-[1.01] active:scale-[0.99] hover:shadow-lg transition-all"
+          // onClick={() => {
+          //   localStorage.setItem("projectId", projectId);
+          //   navigate('/staff_dashboard/profile_details');
+          // }}
+          className="w-[95%] h-10 flex items-center justify-center bg-[#fd4e00] rounded-md font-semibold text-white "
         >
           Profile Details
         </button>

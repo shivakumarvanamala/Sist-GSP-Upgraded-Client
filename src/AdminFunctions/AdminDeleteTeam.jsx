@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { FiChevronDown } from "react-icons/fi";
+import { HiOutlineLogout } from "react-icons/hi";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
-import Footer from "../shared/Footer";
-import LoginNavBar from "../LoginNavBar";
-import jwtDecode from "jwt-decode";
+
+import AdminNavbar from "./AdminNavbar";
 import LoadingScreen from "../shared/Loader";
-import sist_logo_login from "../assets/sist_logo_login.png";
-import { TfiHelpAlt } from "react-icons/tfi";
-import log_out from "../assets/svgs/log_out.svg";
+
+// import sist_logo_login from "../assets/sist_logo_login.png";
+// import log_out from "../assets/svgs/log_out.svg";
+
+
 
 function AdminDeleteTeam() {
   const SERVERPATH = import.meta.env.VITE_SERVERPATH;
@@ -15,6 +18,8 @@ function AdminDeleteTeam() {
   const [teamId, setTeamId] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate()
 
   const handleInputChange = (event) => {
     setTeamId(event.target.value);
@@ -36,7 +41,7 @@ function AdminDeleteTeam() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!teamId) {
+    if (!teamId || !validateTeamId(teamId)) {
       setError(
         'Team ID must be in the format CSE-yy-NNNN, where "yy" is the current year and "NNNN" is less than 1700.'
       );
@@ -56,9 +61,11 @@ function AdminDeleteTeam() {
       setTeamId("");
     } catch (error) {
       if (error.response) {
-        setMessage(error.response.data.message || "Something went wrong.");
+        // setMessage(error.response.data.message || "Something went wrong.");
+        setError(error.response.data.message || "Something went wrong.");
       } else {
-        setMessage("Failed to connect to the server.");
+        // setMessage("Failed to connect to the server.");
+        setError("Failed to connect to the server.");
       }
     }
     setIsLoading(false);
@@ -73,11 +80,11 @@ function AdminDeleteTeam() {
     }, 3000); // 3000 milliseconds = 3 seconds
   };
 
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  // const [isDropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
-  };
+  // const toggleDropdown = () => {
+  //   setDropdownOpen(!isDropdownOpen);
+  // };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -110,19 +117,32 @@ function AdminDeleteTeam() {
     }
   }, [location]);
 
-  const adminLogout = () => {
-    // Remove token from local storage
-    localStorage.removeItem("token");
-    localStorage.removeItem("adminMailId");
-    // Redirect to login page
-    navigate("/");
-  };
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => setError(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
+
+  // const adminLogout = () => {
+  //   localStorage.removeItem("token");
+  //   localStorage.removeItem("adminMailId");
+  //   navigate("/");
+  // };
 
   return (
-    <div className="App">
+    <>
       {isLoading && <LoadingScreen />}
 
-      <nav className="bg-[#9e1c3f] text-white p-4">
+      {/* <nav className="bg-[#9e1c3f] text-white p-4">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center">
             <a href="/">
@@ -140,20 +160,61 @@ function AdminDeleteTeam() {
             >
               <svg className="h-8 w-8 text-gray-100" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>            </button>
             {isDropdownOpen && (
-              <div className="absolute top-10 right-0 bg-white text-gray-800 p-2 rounded shadow-md z-10">
-                <div className="flex flex-row justify-center items-center hover:bg-gray-200">
-                  <img className="h-4 w-4" src={log_out} alt="LogOut" />
-                  <button onClick={adminLogout} className="block p-2">
-                    Logout
-                  </button>
-                </div>
+              <div className="absolute top-12 right-0 w-44 bg-white/80 backdrop-blur-md border border-gray-200 shadow-xl rounded-xl z-20 transition-all duration-300 ease-in-out">
+                <button
+                  onClick={adminLogout}
+                  className="w-full px-5 py-3 text-sm text-gray-700 font-semibold hover:bg-red-50 hover:text-red-600 rounded-xl transition-colors duration-200 text-left"
+                >
+                  Logout
+                </button>
               </div>
             )}
+
           </div>
         </div>
-      </nav>
+      </nav> */}
 
-      <div className="login_bg px-10 xs:px-10 flex justify-center items-center min-h-screen">
+      {/* <nav className="bg-[#9e1c3f] text-white p-4">
+        <div className="container mx-auto flex justify-between items-center">
+          <div className="flex items-center">
+            <a href="/">
+              <img
+                src={sist_logo_login}
+                alt="Logo"
+                className="h-12 w-auto float-start"
+              />
+            </a>
+          </div>
+          <div className="flex items-center relative">
+            <button
+              onClick={toggleDropdown}
+              className="text-sm font-semibold rounded text-white focus:outline-none"
+            >
+              <svg className={`h-8 w-8 text-gray-100 transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""
+                }`} viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path>
+              </svg>
+            </button>
+
+            {isDropdownOpen && (
+              <div className="absolute top-14 right-0 w-48 bg-white rounded-xl shadow-lg border border-gray-200 z-50 fade-in-up">
+                <button
+                  onClick={adminLogout}
+                  className="w-full px-5 py-3 text-sm font-medium text-gray-700 rounded-xl hover:bg-gray-100 hover:text-red-600 transition-all duration-200 tracking-wide"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+
+
+
+
+          </div>
+        </div>
+      </nav> */}
+      <AdminNavbar />
+
+      <div className="admin_login_bg px-10 xs:px-10 flex justify-center items-center ">
         <div className="lg:w-1/4 md:w-2/4 s:w-2/4 xs:w-3/4 border p-4 bg-white bg-opacity-50 backdrop-filter rounded-lg shadow-lg">
           <div className="block">
             <div className="flex justify-center">
@@ -179,14 +240,40 @@ function AdminDeleteTeam() {
                 Delete
               </button>
             </form>
-            {error && <p className="mt-4 text-red-600 text-center">{error}</p>}
+            {/* Status Messages */}
+            {error && (
+              <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl">
+                <p className="text-red-700 text-center font-medium flex items-center justify-center">
+                  <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                  {error}
+                </p>
+              </div>
+            )}
+
             {message && (
-              <p className="mt-4 text-green-600 text-center">{message}</p>
+              <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-xl">
+                <p className="text-green-700 text-center font-medium flex items-center justify-center">
+                  <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  {message}
+                </p>
+              </div>
             )}
           </div>
         </div>
       </div>
-    </div>
+
+      <footer
+        className="w-full h-8 absolute bottom-0 bg-slate-100 flex items-center justify-center text-black mt-auto"
+        onClick={() => setOpen(false)}
+      >
+        <b>&copy;</b>&nbsp;
+        2025 Sathyabama University. All rights reserved.
+      </footer>
+    </>
   );
 }
 
