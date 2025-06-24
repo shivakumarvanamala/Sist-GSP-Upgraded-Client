@@ -86,3 +86,39 @@ html {
 .logout_fade_in_up {
   animation: logoutFadeUp 0.3s ease-out;
 }
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.animate-in {
+  animation: slideIn 0.2s ease-out;
+}
+
+.slide-in-from-top-2 {
+  transform: translateY(-8px);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
