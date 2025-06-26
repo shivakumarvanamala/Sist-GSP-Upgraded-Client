@@ -1,9 +1,4 @@
-import React from "react";
-
 import foot_logo from "../assets/sist_logo_login.png";
-import Email from "../assets/email.png";
-import Linkedin from "../assets/linkedin.png";
-import Insta from "../assets/instagram.png";
 import { AiOutlineMail } from "react-icons/ai";
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 
@@ -23,16 +18,6 @@ const Footer = () => {
             <p className="text-lg font-semibold pb-3.5">Visit us at:</p>
           </div>
           <div className="flex py-1 cursor-pointer">
-            {/* <div
-              className="cursor-pointer"
-              onClick={() => {
-                window.open(
-                  "https://mail.google.com/mail/?view=cm&fs=1&to=guideselection.cse@sathyabama.ac.in"
-                );
-              }}
-            >
-              <img src={Email} alt="Email" />
-            </div>{" "} */}
             <a
               href="mailto:guideselection.cse@sathyabama.ac.in"
               className="cursor-pointer"
@@ -41,7 +26,7 @@ const Footer = () => {
             </a>
             &nbsp;
             <p
-              // className="cursor-pointer"
+              className="cursor-pointer"
               onClick={() => {
                 window.open(
                   "https://mail.google.com/mail/?view=cm&fs=1&to=guideselection.cse@sathyabama.ac.in"
@@ -52,22 +37,16 @@ const Footer = () => {
               Mail
             </p>
           </div>
-          <div className="flex py-1 cursor-pointer">
-            {/* <img
-              src={Linkedin}
-              alt="Linkedin
-            "
-            /> */}
+          <a className="flex py-1 cursor-pointer" href="https://www.linkedin.com/company/sathyabama-school-of-computing/">
             <FaLinkedin />
             &nbsp;
             <p> Linkedin</p>
-          </div>
-          <div className="flex py-1 cursor-pointer">
-            {/* <img src={Insta} alt="Instagram" />  */}
+          </a>
+          <a className="flex py-1 cursor-pointer" href="https://www.instagram.com/sathyabama_cse?igsh=aTlkeDN0aHJjOTN5">
             <FaInstagram />
             &nbsp;
             <p> Instagram</p>
-          </div>
+          </a>
         </div>
       </div>
       <hr className="mx-20" />

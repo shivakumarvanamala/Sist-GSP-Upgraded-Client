@@ -706,8 +706,8 @@ const Dashboard = () => {
     try {
       if (
         !editedProjectDetails.projectTitle ||
-        !editedProjectDetails.projectDomain ||
-        !editedProjectDetails.projectDesc
+        !editedProjectDetails.projectDomain
+        // !editedProjectDetails.projectDesc
       ) {
         setAlert(true);
         // setAlertMessage("Select Your Project Category");
@@ -1176,7 +1176,7 @@ const Dashboard = () => {
                   {/* Title */}
                   <div className="space-y-2">
                     <label className="block text-lg font-bold text-gray-700">
-                      Project Title
+                      Project Title <span className="text-red-600">*</span>
                     </label>
                     <div className="relative">
                       <input
@@ -1195,7 +1195,7 @@ const Dashboard = () => {
                   {/* Domain */}
                   <div className="space-y-2">
                     <label className="block text-lg font-bold text-gray-700">
-                      Project Domain
+                      Project Domain <span className="text-red-600">*</span>
                     </label>
                     <div className="relative">
                       <input

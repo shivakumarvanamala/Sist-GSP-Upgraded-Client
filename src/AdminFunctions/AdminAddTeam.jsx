@@ -16,7 +16,7 @@ function AdminAddTeam() {
   const [student1, setStudent1] = useState("");
   const [student2, setStudent2] = useState("");
   const [isTeamSize2, setIsTeamSize2] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [message, setMessage] = useState("");
 
   const [alert, setAlert] = useState(false);
@@ -70,7 +70,7 @@ function AdminAddTeam() {
       selectedGuide: facultyEmail,
       regNo: student1,
       p2regNo: isTeamSize2 ? student2 : null,
-      password: "sist",
+      password: "studentcse",
     };
 
     try {
@@ -81,6 +81,7 @@ function AdminAddTeam() {
       );
       if (response.data.message == "success") {
         setMessage(response.data.message);
+        setError()
       }
       else {
         setError(response.data.message);

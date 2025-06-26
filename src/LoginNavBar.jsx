@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { FiMenu } from "react-icons/fi"; // Assuming you want to use the Feather icon pack
-
+import { FiMenu } from "react-icons/fi";
 import sist_logo_login from "./assets/sist_logo_login.png";
 
 const LoginNavBar = () => {
