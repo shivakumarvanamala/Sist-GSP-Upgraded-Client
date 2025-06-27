@@ -11,7 +11,8 @@ import {
   FiBookOpen,
   FiZap,
   FiArrowRight,
-  FiEye
+  FiEye,
+  FiMessageCircle
 } from 'react-icons/fi';
 
 const Home = () => {
@@ -239,6 +240,61 @@ const Home = () => {
               {loginSteps.map((step, index) => (
                 <StepCard key={index} step={step} index={index} delay={index * 150} />
               ))}
+            </div>
+          </section>
+
+          <section className="mb-16 relative">
+            {/* Decorative separator */}
+            <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-600 rounded-full"></div>
+
+            <div className="max-w-4xl mx-auto">
+              <div className="relative overflow-hidden bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 rounded-2xl p-8 border border-emerald-200 shadow-lg hover:shadow-xl transition-all duration-500 group">
+                {/* Animated background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/5 via-teal-400/5 to-cyan-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                {/* Content */}
+                <div className="relative z-10 flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6">
+                  {/* Icon */}
+                  <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <FiMessageCircle className="w-8 h-8 text-white" />
+                  </div>
+
+                  {/* Text Content */}
+                  <div className="text-center md:text-left">
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
+                      Need Help or Have Questions?
+                    </h3>
+                    <p className="text-gray-700 mb-4 md:mb-4">
+                      For any queries, reach us out via:
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3 items-center justify-center md:justify-start">
+                      <button
+                        onClick={() => {
+                          window.open(
+                            "https://mail.google.com/mail/?view=cm&fs=1&to=guideselection.cse@sathyabama.ac.in"
+                          );
+                        }} className="inline-flex items-center space-x-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-emerald-700 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 group/email"
+                      >
+                        <FiMail className="w-5 h-5 group-hover/email:rotate-12 transition-transform duration-300" />
+                        <span className="break-all">Mail</span>
+                      </button>
+                      <a
+                        href="https://shorturl.at/DzIZ5"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 group/form"
+                      >
+                        <FiBookOpen className="w-5 h-5 group-hover/form:rotate-12 transition-transform duration-300" />
+                        <span>Forms</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Decorative elements */}
+                <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-emerald-300/20 to-teal-300/20 rounded-full blur-xl"></div>
+                <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-br from-teal-300/20 to-cyan-300/20 rounded-full blur-xl"></div>
+              </div>
             </div>
           </section>
         </div>
