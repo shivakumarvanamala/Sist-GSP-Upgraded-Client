@@ -13,6 +13,8 @@ import {
   FiArrowRight,
   FiEye,
   FiMessageCircle
+  FiEye,
+  FiMessageCircle
 } from 'react-icons/fi';
 
 const Home = () => {
