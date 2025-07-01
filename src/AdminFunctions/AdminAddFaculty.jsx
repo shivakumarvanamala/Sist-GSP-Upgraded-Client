@@ -15,7 +15,7 @@ function AdminAddFaculty() {
   const [domain2, setDomain2] = useState("");
   const [domain3, setDomain3] = useState("");
   const [imageDriveLink, setImageDriveLink] = useState("");
-  const [totalBatches, setTotalBatches] = useState("");
+  const [allotedBatches, setAllotedBatches] = useState("");
   const [maxTeams, setMaxTeams] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -65,7 +65,7 @@ function AdminAddFaculty() {
     setMessage("");
 
     // Validate numeric fields
-    if (isNaN(totalBatches) || totalBatches <= 0) {
+    if (isNaN(allotedBatches) || allotedBatches <= 0) {
       setError("Total Batches must be a positive number");
       return;
     }
@@ -84,7 +84,7 @@ function AdminAddFaculty() {
       designation: designation,
       fieldOfInterest: fieldOfInterest,
       imageDriveLink: imageDriveLink,
-      totalBatches: parseInt(totalBatches),
+      allotedBatches: parseInt(allotedBatches),
       maxTeams: parseInt(maxTeams),
       password: password,
     };
@@ -105,7 +105,7 @@ function AdminAddFaculty() {
       setDomain2("");
       setDomain3("");
       setImageDriveLink("");
-      setTotalBatches("");
+      setAllotedBatches("");
       setMaxTeams("");
       setPassword("");
     } catch (error) {
@@ -288,12 +288,12 @@ function AdminAddFaculty() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
-                      Total Batches <span className="text-red-500">*</span>
+                      Alloted Batches <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="number"
-                      value={totalBatches}
-                      onChange={(e) => setTotalBatches(e.target.value)}
+                      value={allotedBatches}
+                      onChange={(e) => setAllotedBatches(e.target.value)}
                       placeholder="5"
                       required
                       min="1"

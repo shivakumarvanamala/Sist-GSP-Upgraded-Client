@@ -2,9 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import LoadingScreen from "../shared/Loader";
-// import sist_logo_login from "../assets/sist_logo_login.png";
-// import log_out from "../assets/svgs/log_out.svg";
-
 import AdminNavbar from "./AdminNavbar";
 
 function AdminUpdateFacultyVacancies() {
@@ -15,14 +12,10 @@ function AdminUpdateFacultyVacancies() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  // const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  // const toggleDropdown = () => {
-  //   setDropdownOpen(!isDropdownOpen);
-  // };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -72,12 +65,6 @@ function AdminUpdateFacultyVacancies() {
     }
   }, [message]);
 
-
-  // const adminLogout = () => {
-  //   localStorage.removeItem("token");
-  //   localStorage.removeItem("adminMailId");
-  //   navigate("/");
-  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();

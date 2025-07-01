@@ -11,10 +11,8 @@ import {
   FiBookOpen,
   FiZap,
   FiArrowRight,
+  FiMessageCircle,
   FiEye,
-  FiMessageCircle
-  FiEye,
-  FiMessageCircle
 } from 'react-icons/fi';
 
 const Home = () => {

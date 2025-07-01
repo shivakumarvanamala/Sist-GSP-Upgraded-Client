@@ -1,7 +1,6 @@
 import axios from "axios";
-import jwtDecode from "jwt-decode";
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LoginNavBar from "./LoginNavBar";
 import Footer from "./shared/Footer";
 
@@ -15,7 +14,6 @@ export default function DuoRegisterForm() {
 
   const [isSecondMailVerified, setIsSecondMailVerified] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
-  const [isOTPVerifying, setIsOTPVerifying] = useState(false);
   const [verifyStatus, setVerifyStatus] = useState(false);
 
   const [receivedOTP, setReceivedOTP] = useState("");
@@ -101,13 +99,12 @@ export default function DuoRegisterForm() {
   }, [navigate]);
 
   useEffect(() => {
-    // Call getData() when the component mounts or when guideMailId changes
-    getData();
+    vacanciesData();
     checkPersonOneRegistered();
     // checkPersonTwoRegistered();
   }, [userEmail, guideMailId]);
 
-  const getData = async () => {
+  const vacanciesData = async () => {
     try {
       const response = await axios.get(
         SERVERPATH + "/check_vacancies/" + guideMailId
@@ -199,7 +196,7 @@ export default function DuoRegisterForm() {
           alert("No Vacancies");
         } else if (response1.data["error"] === "Email already registered") {
           setIsPersonOneNotRegistered(false);
-          alert("Account already Registered");
+          alert($`{userEmail} already Registered`);
           navigate("/");
           // console.warn(isPersonOneNotRegistered);
         } else if (
@@ -230,7 +227,7 @@ export default function DuoRegisterForm() {
                   guideMailId: guideMailId,
                 });
                 alert(
-                  "Second Member Account already Registered\nIf not try after a minute."
+                  $`{setUserEmail} already Registered\nIf not try after a minute.`
                 );
                 navigate("/");
                 // console.warn(isNotRegistered);

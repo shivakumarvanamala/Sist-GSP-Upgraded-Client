@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
-import jwtDecode from "jwt-decode";
 
 import LoginNavBar from "./LoginNavBar";
 import Footer from "./shared/Footer";
@@ -36,27 +35,6 @@ export default function SingleRegisterForm() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  // useEffect(() => {
-  //   const checkToken = async () => {
-  //     const token = localStorage.getItem("token_for_first_time");
-
-  //     if (token) {
-  //       const decodedToken = jwtDecode(token);
-  //       const expirationTime = decodedToken.exp * 1000;
-
-  //       if (expirationTime < Date.now()) {
-  //         localStorage.removeItem("token");
-  //         localStorage.removeItem("GuideName");
-  //         localStorage.removeItem("GuideMailId");
-  //         navigate("/login");
-  //       }
-  //     } else {
-  //       navigate("/login");
-  //     }
-  //   };
-  //   checkToken();
-  // }, [navigate]);
-
   useEffect(() => {
     const token = localStorage.getItem("token_for_first_time");
     const userEmail = localStorage.getItem("userEmail");
@@ -71,7 +49,6 @@ export default function SingleRegisterForm() {
           { headers }
         );
         if (response.data.message == "Authenticated") {
-          // console.warn(("hiii"))
         } else {
           localStorage.removeItem("token");
           localStorage.removeItem("userEmail");
@@ -87,18 +64,17 @@ export default function SingleRegisterForm() {
   }, [navigate]);
 
   useEffect(() => {
-    // Call getData() when the component mounts or when guideMailId changes
-    getData();
+    vacanciesData();
     checkRegistered();
   }, []);
 
-  const getData = async () => {
+
+  const vacanciesData = async () => {
     try {
       const response = await axios.get(
         SERVERPATH + "/check_vacancies/" + guideMailId
       );
       setGetVacancies(response.data);
-      //   console.warn(getVacancies)
     } catch (err) {
       console.warn(err);
     }
@@ -107,7 +83,6 @@ export default function SingleRegisterForm() {
   const checkRegistered = async () => {
     try {
       const response = await axios.get(SERVERPATH + "/api/check/" + userEmail);
-      // console.warn(response.data);
       setIsNotRegistered(response.data.first_time);
     } catch (err) {
       console.warn(err);

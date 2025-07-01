@@ -1,18 +1,4 @@
 export default function DisplayGuide(props) {
-  // const navigate = useNavigate();
-  // const location = useLocation();
-  // const currentPath = location.pathname;
-
-  // const handleButtonClick = (route, name, mailId, vacancies, empId) => {
-  //   if (parseInt(vacancies) > 0) {
-  //     localStorage.setItem("GuideName", name);
-  //     localStorage.setItem("GuideMailId", mailId);
-  //     localStorage.setItem("GuideId", empId);
-  //     navigate(currentPath + "/" + route);
-  //   } else {
-  //     alert("NO VACANCIES");
-  //   }
-  // };
 
   const getDirectLinkFromShareableLink = (shareableLink) => {
     try {
@@ -26,7 +12,6 @@ export default function DisplayGuide(props) {
   };
 
   const isVacant = parseInt(props.vacancies) > 0;
-  // console.log("maxteams", props.maxTeams)
 
   return (
     <div className="flex flex-col lg:flex-row border rounded-xl overflow-hidden ">
@@ -57,19 +42,19 @@ export default function DisplayGuide(props) {
         </ul>
       </div>
 
+      {/* Alloted Batches */}
+      <div className="lg:w-2/12 flex flex-col sm:flex-row items-center justify-center p-4 border-r space-y-1 sm:space-y-0 sm:space-x-2">
+        <span className="text-sm text-gray-500 font-medium sm:hidden">Alloted Batches:</span>
+        <p className="text-base text-gray-800">
+          Alloted: <span className={`font-bold`}>{props.AllotedBatches}</span>
+        </p>
+      </div>
+
       {/* Vacancies */}
       <div className="lg:w-2/12 flex flex-col sm:flex-row items-center justify-center p-4 border-r space-y-1 sm:space-y-0 sm:space-x-2">
         <span className="text-sm text-gray-500 font-medium sm:hidden">Vacancies:</span>
         <p className="text-base text-gray-800">
           Slots Remaining: <span className={`font-bold ${isVacant ? 'text-red-700' : 'text-gray-400'}`}>{props.vacancies > 0 ? props.vacancies : 0}</span>
-        </p>
-      </div>
-
-      {/* Max Teams */}
-      <div className="lg:w-2/12 flex flex-col sm:flex-row items-center justify-center p-4 border-r space-y-1 sm:space-y-0 sm:space-x-2">
-        <span className="text-sm text-gray-500 font-medium sm:hidden">Max Teams:</span>
-        <p className="text-base text-gray-800">
-          Teams: <span className={`font-bold`}>{props.MaxTeams}</span>
         </p>
       </div>
 
@@ -82,15 +67,6 @@ export default function DisplayGuide(props) {
               ? 'bg-[#9e1c3f] text-white hover:scale-105 hover:shadow-lg'
               : 'bg-gray-300 text-gray-500 cursor-not-allowed'}
           `}
-        // onClick={() =>
-        //   handleButtonClick(
-        //     props.empId,
-        //     props.name,
-        //     props.mailId,
-        //     props.vacancies,
-        //     props.empId
-        //   )
-        // }
         >
           {isVacant ? "AVAILABLE" : "FULL"}
         </button>
