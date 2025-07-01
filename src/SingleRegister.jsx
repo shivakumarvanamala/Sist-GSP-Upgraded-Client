@@ -10,6 +10,8 @@ export default function SingleRegister() {
   const SERVERPATH = import.meta.env.VITE_SERVERPATH;
   const [searchQuery, setSearchQuery] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const [vacancyFilter, setVacancyFilter] = useState("");
+  const [vacancyInputValue, setVacancyInputValue] = useState("");
   const [guideDict, setGuideDict] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -35,9 +37,8 @@ export default function SingleRegister() {
     setIsLoading(true);
     try {
       const res = await axios.get(`${SERVERPATH}/guide_list`, {
-        params: { page, limit, search: searchQuery },
+        params: { page, limit, search: searchQuery, minVacancies: vacancyFilter },
       });
-
       // console.log("Fetched data:", res.data); 
 
       // ✅ FIX: check correct keys from backend response
@@ -80,7 +81,7 @@ export default function SingleRegister() {
 
   useEffect(() => {
     getData();
-  }, [searchQuery, page]);
+  }, [searchQuery, vacancyFilter, page]);
 
   const guideSerialNumber = (page - 1) * limit + 1;
 
@@ -101,39 +102,71 @@ export default function SingleRegister() {
       })
       .join(" ");
 
+  const handleSearch = () => {
+    setPage(1);
+    setSearchQuery(inputValue.trim());
+    setVacancyFilter(vacancyInputValue.trim());
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
+  const clearFilters = () => {
+    setInputValue("");
+    setVacancyInputValue("");
+    setSearchQuery("");
+    setVacancyFilter("");
+    setPage(1);
+  };
+
+
   return (
     <>
       {isLoading && <LoadingScreen />}
       <LoginNavBar />
 
-      <div className="bg-[#9e1c3f] flex flex-col lg:flex-row items-center justify-between mt-1 mb-5 px-4 py-3 sticky top-0 z-50 shadow-md space-y-2 lg:space-y-0">
-        {/* <div className="flex flex-row items-center justify-center" /> */}
+      <div className="bg-[#9e1c3f] flex flex-col lg:flex-row items-center justify-between mt-1 mb-5 px-4 py-3 sticky top-0 z-50 shadow-md space-y-3 lg:space-y-0">
         <div className="flex flex-row items-center justify-center">
           <h1 className="text-white font-semibold text-xl lg:text-2xl">Select Your Guide</h1>
         </div>
-        <div className="flex flex-row items-center w-full lg:w-[40%] gap-2">
-          <input
-            type="text"
-            placeholder="Search by guide name..."
-            className="border-2 border-black rounded-lg px-4 h-12 w-full text-center"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                setPage(1);
-                setSearchQuery(inputValue.trim());
-              }
-            }}
-          />
-          <button
-            className="bg-white text-black border-2 border-black rounded-lg px-4 h-12 font-semibold"
-            onClick={() => {
-              setPage(1);
-              setSearchQuery(inputValue.trim());
-            }}
-          >
-            Search
-          </button>
+        <div className="flex flex-col lg:flex-row items-center w-full lg:w-[50%] gap-3">
+          <div className="flex flex-row items-center w-full gap-3">
+            <input
+              type="text"
+              placeholder="Search by guide name..."
+              className="border-2 border-white rounded-lg px-4 h-11 w-full text-center bg-white/90 backdrop-blur-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            <input
+              type="number"
+              placeholder="Min vacancies"
+              min="0"
+              className="border-2 border-white rounded-lg px-3 h-11 w-32 text-center bg-white/90 backdrop-blur-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
+              value={vacancyInputValue}
+              onChange={(e) => setVacancyInputValue(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+          </div>
+          <div className="flex flex-row gap-2">
+            <button
+              className="bg-white text-[#9e1c3f] rounded-lg px-5 h-11 font-semibold hover:bg-white/90 transition-all shadow-md"
+              onClick={handleSearch}
+            >
+              Search
+            </button>
+            <button
+              className="bg-white/20 text-white border border-white/30 rounded-lg px-4 h-11 font-medium hover:bg-white/30 transition-all"
+              onClick={clearFilters}
+              title="Clear Filters"
+            >
+              Clear
+            </button>
+          </div>
         </div>
       </div>
 
