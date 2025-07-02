@@ -27,7 +27,7 @@ function AdminDeleteTeam() {
 
   const validateTeamId = (id) => {
     const regex = /^CSE-(\d{2})-(\d{4})$/;
-    const match = id.match(regex);
+    const match = id.toUpperCase().match(regex);
 
     if (!match) return false;
 
@@ -54,7 +54,7 @@ function AdminDeleteTeam() {
     try {
       setIsLoading(true);
       const response = await axios.post(SERVERPATH + "/admin/deleteTeam", {
-        teamId: teamId,
+        teamId: teamId.toUpperCase(),
       });
       console.log(teamId);
       setMessage(response.data.message);
